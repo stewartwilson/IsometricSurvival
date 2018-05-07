@@ -7,7 +7,7 @@ public class UnitController : MonoBehaviour {
     public bool isPlayerUnit;
     public bool isSelected;
     public bool isDefeated;
-    public UnitGroup unitgroup;
+    public Unit unit;
     public Facing facing;
     public bool canMove;
     protected Animator animator;
@@ -19,28 +19,13 @@ public class UnitController : MonoBehaviour {
     protected void Start()
     {
         animator = GetComponent<Animator>();
-        if (unitgroup != null)
-        {
-            maxMovement = unitgroup.leader.maxMovement;
-        } else
-        {
-            maxMovement = 1;
-        }
     }
 
-    protected void updateIfDefeated()
+    protected void checkIfDefeated()
     {
-        if (!isDefeated)
+        if(unit.health <=0)
         {
-            bool tempBool = true;
-            foreach (UnitPosition up in unitgroup.unitList)
-            {
-                if (up.unit.health > 0)
-                {
-                    tempBool = false;
-                }
-            }
-            isDefeated = tempBool;
+            isDefeated = true;
         }
     }
 }

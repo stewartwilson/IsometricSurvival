@@ -6,7 +6,8 @@ public class TileData : MonoBehaviour {
 
     public GridPosition position;
     public Sprite sprite;
-    public bool safeToStand;
+    public GroundType groundType;
+    public TileSave tileSave;
 
     private void Awake()
     {

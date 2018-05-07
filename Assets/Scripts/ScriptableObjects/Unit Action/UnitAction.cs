@@ -7,16 +7,12 @@ using UnityEngine;
 [System.Serializable]
 public abstract class UnitAction
 {
-    [SerializeField]
     public string actionName;
-    [SerializeField]
     public string description;
-    [SerializeField]
     public Unit actor;
-    [SerializeField]
     public Unit target;
-    [SerializeField]
-    private Dictionary<int, int[]> targetPreference;
+    public bool targetsEnemy;
+    public bool targetsAlly;
+    public int range;
 
-    public abstract void resolveTarget(UnitGroup allies, UnitGroup enemies, int casterPosition);
 }

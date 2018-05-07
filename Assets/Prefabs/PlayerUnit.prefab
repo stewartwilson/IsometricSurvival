@@ -54,7 +54,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: 0.4}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -78,6 +78,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7e3f75fcccffa948a7ec3e9de99f156, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isPlayerUnit: 0
+  isSelected: 0
+  isDefeated: 0
+  unit: {fileID: 0}
+  facing: 0
+  canMove: 0
+  position:
+    x: 0
+    y: 0
+    elevation: 0
+  currentPath: []
+  maxMovement: 0
+  spriteOffset: {x: 0, y: 0}
 --- !u!212 &212964140530241156
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -120,5 +133,5 @@ SpriteRenderer:
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.609
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0

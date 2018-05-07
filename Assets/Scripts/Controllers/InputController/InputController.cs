@@ -2,6 +2,7 @@
 using System.Collections;
 using UnityEngine.SceneManagement;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
 public class InputController : MonoBehaviour
 {
@@ -26,15 +27,13 @@ public class InputController : MonoBehaviour
     public GameObject unitBeingPlaced;
     //holds units original location before an attempted move
     private Vector2 unitsOriginalLocation;
-    private LevelData levelData;
-    private LevelController levelController;
+    private GameController gameController;
 
     private void Start()
     {
-        levelController = GameObject.Find("Level Controller").GetComponent<LevelController>();
-        levelData = levelController.levelData;
-        maxCursorXPos = levelData.getMaxX();
-        maxCursorYPos = levelData.getMaxY();
+        gameController = GameObject.Find("Game Controller").GetComponent<GameController>();
+        maxCursorXPos = gameController.levelController.maxX;
+        maxCursorYPos = gameController.levelController.maxY;
     }
 
     private void Update()
@@ -90,19 +89,19 @@ public class InputController : MonoBehaviour
                 GridPosition startPostion = new GridPosition(cursorPosition.x, cursorPosition.y, cursorPosition.elevation);
                 if (vertical > 0)
                 {
-                    cursorPosition.y++;
+                    cursorPosition.x++;
                 }
                 if (vertical < 0)
                 {
-                    cursorPosition.y--;
+                    cursorPosition.x--;
                 }
                 if (horizontal > 0)
                 {
-                    cursorPosition.x++;
+                    cursorPosition.y--;
                 }
                 if (horizontal < 0)
                 {
-                    cursorPosition.x--;
+                    cursorPosition.y++;
                 }
 
                 if (cursorPosition.y < 0)
@@ -123,7 +122,7 @@ public class InputController : MonoBehaviour
                 }
                 if (movingUnit) {
                     
-                    if(levelController.possibleMoves.Contains(cursorPosition)) {
+                    if(gameController.possibleMoves.Contains(cursorPosition)) {
                         updateCursor();
                     }
                     else
@@ -137,7 +136,7 @@ public class InputController : MonoBehaviour
                 {
                     movingUnit = false;
                     selectedObject = null;
-                    levelController.selectedUnit = null;
+                    gameController.selectedUnit = null;
                 }
 
                 nextCursorMoveAllowed = Time.time + cursorDelay;
@@ -156,18 +155,17 @@ public class InputController : MonoBehaviour
             {
                 if (movingUnit && enter)
                 {
-                    levelController.moveUnitGroup(cursorPosition);
-                    //moveUnitTo(cursor.transform.position + new Vector3(0, .5f));
+                    gameController.moveUnit(cursorPosition);
                     movingUnit = false;
                     placingUnit = true;
                     unitBeingPlaced = selectedObject;
                     selectedObject = null;
-                    levelController.selectedUnit = null;
+                    gameController.selectedUnit = null;
                 }
                 if (enter && !movingUnit)
                 {
                     selectedObject = null;
-                    levelController.selectedUnit = null;
+                    gameController.selectedUnit = null;
                     
                 }
             }
@@ -181,10 +179,7 @@ public class InputController : MonoBehaviour
      */
     public void updateCursor()
     {
-        LevelData levelData = levelController.levelData;
-        MapTile mt = levelData.getMapTileFromXY(cursorPosition);
-        cursor.transform.position = IsometricHelper.gridToGamePostion(mt.position);
-        
+        cursor.transform.position = IsometricHelper.gridToGamePostion(cursorPosition);
     }
 
     /**
@@ -196,7 +191,7 @@ public class InputController : MonoBehaviour
         if ("Player Unit".Equals(selectedObject.tag))
         {
             movingUnit = true;
-            levelController.selectedUnit = selectedObject;
+            gameController.selectedUnit = selectedObject;
             playerUnitUIPanel.SetActive(false);
             panelUIActive = false;
         }

@@ -19,4 +19,9 @@ public struct GridPosition
         this.y = y;
         this.elevation = elevation;
     }
+
+    public override string ToString()
+    {
+        return "x="  + x +","+ "y=" + y + "," + "elevation=" + elevation ;
+    }
 }

@@ -7,7 +7,7 @@ public class EnemyUnitController : UnitController {
     protected void Update()
     {
         animator.SetInteger("Facing", (int)facing);
-        updateIfDefeated();
+        checkIfDefeated();
         transform.position = IsometricHelper.gridToGamePostion(position) + spriteOffset;
     }
 }
