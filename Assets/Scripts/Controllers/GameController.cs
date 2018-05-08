@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour
 {
-    public GameObject selectedUnit;
+    public GameObject selectedObject;
     public GameObject movesContainer;
     public bool displayingMoves;
     public List<GridPosition> possibleMoves;
@@ -32,28 +32,27 @@ public class GameController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (selectedUnit != null && !displayingMoves)
+        if (selectedObject != null && !displayingMoves)
         {
-            GridPosition gp = selectedUnit.GetComponent<PlayerUnitController>().position;
-            int maxMovement = selectedUnit.GetComponent<PlayerUnitController>().maxMovement;
+            GridPosition gp = selectedObject.GetComponent<PlayerUnitController>().position;
+            int maxMovement = selectedObject.GetComponent<PlayerUnitController>().maxMovement;
             possibleMoves = getPossibleMovement(gp, maxMovement);
 
             InstantiateMovesDisplay(possibleMoves);
             displayingMoves = true;
         }
-        else if (selectedUnit == null)
+        else if (selectedObject == null)
         {
             if (displayingMoves)
             {
                 destroyMovesDisplay();
-                displayingMoves = false;
             }
         }
     }
 
     public void moveUnit(GridPosition destination)
     {
-        selectedUnit.GetComponent<PlayerUnitController>().position = destination;
+        selectedObject.GetComponent<PlayerUnitController>().position = destination;
     }
 
     private void InstantiateMovesDisplay(List<GridPosition> moves)
@@ -63,7 +62,7 @@ public class GameController : MonoBehaviour
         {
             count++;
             GameObject go = null;
-            GameObject unit = getUnitAtPosition(pos);
+            GameObject unit = getObjectAtPosition(pos);
             if (unit == null)
             {
                 go = (GameObject)Instantiate(Resources.Load("Possible Move"));
@@ -75,7 +74,7 @@ public class GameController : MonoBehaviour
         }
     }
 
-    private GameObject getUnitAtPosition(GridPosition position)
+    public GameObject getObjectAtPosition(GridPosition position)
     {
         foreach (GameObject unit in playerUnits)
         {
@@ -96,12 +95,13 @@ public class GameController : MonoBehaviour
         return null;
     }
 
-    private void destroyMovesDisplay()
+    public void destroyMovesDisplay()
     {
         foreach (Transform child in movesContainer.transform)
         {
             Destroy(child.gameObject);
         }
+        displayingMoves = false;
     }
 
     public List<GridPosition> getPossibleMovement(GridPosition currentPos, int maxMovement)
@@ -112,7 +112,7 @@ public class GameController : MonoBehaviour
         {
             //TODO account for elevation difference
             if (IsometricHelper.distanceBetweenGridPositions(wa.position, currentPos) <= maxMovement &&
-                getUnitAtPosition(wa.position) == null)
+                getObjectAtPosition(wa.position) == null)
             {
                 possibleMoves.Add(wa.position);
             }

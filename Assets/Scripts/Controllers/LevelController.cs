@@ -13,17 +13,26 @@ public class LevelController : MonoBehaviour {
     // Use this for initialization
     void Awake() {
         walkableArea = new List<WalkableArea>();
-        populateMap();
+
+        //populateMap();
     }
 
     private void Start()
     {
-        
+        populateWalkableArea();
     }
 
     // Update is called once per frame
     void Update () {
         
+    }
+
+    public void populateWalkableArea()
+    {
+        foreach(Transform child in walkablePositions.transform)
+        {
+            walkableArea.Add(child.gameObject.GetComponent<WalkableArea>());
+        }
     }
 
     public void populateMap()
@@ -34,6 +43,7 @@ public class LevelController : MonoBehaviour {
             {
                 GridPosition pos = new GridPosition(i, j, 0);
                 GameObject go = (GameObject)Instantiate(Resources.Load("Walkable Position"));
+                go.name = "x" + i + "y" + j;
                 go.GetComponent<SpriteRenderer>().enabled = false;
                 go.transform.position = IsometricHelper.gridToGamePostion(pos);
                 go.GetComponent<WalkableArea>().position = pos;

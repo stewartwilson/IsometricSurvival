@@ -14,7 +14,6 @@ public class InputController : MonoBehaviour
     public float nextCursorMoveAllowed;
     //Holds cursor object
     public GameObject cursor;
-    public GridPosition cursorPosition;
     public int maxCursorXPos;
     public int maxCursorYPos;
     public bool touching;
@@ -26,8 +25,10 @@ public class InputController : MonoBehaviour
     //holds unit being move to determine location and directino facing
     public GameObject unitBeingPlaced;
     //holds units original location before an attempted move
-    private Vector2 unitsOriginalLocation;
+    private GridPosition unitsOriginalPosition;
+    private Facing unitsOriginalFacing;
     private GameController gameController;
+    private List<GridPosition> possibleMoves;
 
     private void Start()
     {
@@ -71,14 +72,25 @@ public class InputController : MonoBehaviour
             }
             if(back)
             {
-                unitBeingPlaced.transform.position = unitsOriginalLocation;
+                unitBeingPlaced.GetComponent<UnitController>().isBeingPlacing = false;
+                unitBeingPlaced.transform.position = IsometricHelper.gridToGamePostion(unitsOriginalPosition) +
+                        unitBeingPlaced.GetComponent<UnitController>().spriteOffset;
+                unitBeingPlaced.GetComponent<UnitController>().facing = unitsOriginalFacing;
+                unitBeingPlaced = null;
                 placingUnit = false;
-                movingUnit = false;
+                movingUnit = true;
+                back = false;
+                
             }
             else if(enter)
             {
                 placingUnit = false;
                 movingUnit = false;
+                gameController.moveUnit(cursor.GetComponent<CursorController>().position);
+                unitBeingPlaced.GetComponent<UnitController>().isBeingPlacing = false;
+                selectedObject = null;
+                unitBeingPlaced = null;
+                gameController.selectedObject = null;
             }
         }
         else
@@ -86,6 +98,7 @@ public class InputController : MonoBehaviour
             //resonsible for moving cursor when nothing is selected
             if (!(Time.time < nextCursorMoveAllowed))
             {
+                GridPosition cursorPosition = cursor.GetComponent<CursorController>().position;
                 GridPosition startPostion = new GridPosition(cursorPosition.x, cursorPosition.y, cursorPosition.elevation);
                 if (vertical > 0)
                 {
@@ -120,66 +133,48 @@ public class InputController : MonoBehaviour
                 {
                     cursorPosition.x = maxCursorXPos;
                 }
-                if (movingUnit) {
-                    
-                    if(gameController.possibleMoves.Contains(cursorPosition)) {
-                        updateCursor();
-                    }
-                    else
-                    {
-                        cursorPosition = startPostion;
-                    }
-                } else {
-                    updateCursor();
-                }
-                if(movingUnit && back)
-                {
-                    movingUnit = false;
-                    selectedObject = null;
-                    gameController.selectedUnit = null;
-                }
+                cursor.GetComponent<CursorController>().position = cursorPosition;
 
                 nextCursorMoveAllowed = Time.time + cursorDelay;
             }
-            GameObject tempSelect = cursor.GetComponent<CursorController>().objectInTile;
-            if (tempSelect != null && !movingUnit)
+            if (selectedObject == null)
             {
+                Debug.Log("no selected");
                 if (enter)
                 {
-                    selectObject(cursor.GetComponent<CursorController>().objectInTile);
-                    unitsOriginalLocation = selectedObject.transform.position;
-
+                    Debug.Log("enter");
+                    GameObject obj = gameController.getObjectAtPosition(cursor.GetComponent<CursorController>().position);
+                    if(obj != null)
+                    {
+                        selectObject(obj);
+                        
+                    }
                 }
             }
-            else
+            else if (movingUnit && back)
             {
-                if (movingUnit && enter)
+                back = false;
+                movingUnit = false;
+                gameController.destroyMovesDisplay();
+                gameController.selectedObject = null;
+                cursor.GetComponent<CursorController>().position = selectedObject.GetComponent<UnitController>().position;
+                playerUnitUIPanel.SetActive(true);
+                panelUIActive = true;
+            }
+            else if (movingUnit && enter)
+            {
+                if (gameController.possibleMoves.Contains(cursor.GetComponent<CursorController>().position))
                 {
-                    gameController.moveUnit(cursorPosition);
                     movingUnit = false;
                     placingUnit = true;
                     unitBeingPlaced = selectedObject;
-                    selectedObject = null;
-                    gameController.selectedUnit = null;
-                }
-                if (enter && !movingUnit)
-                {
-                    selectedObject = null;
-                    gameController.selectedUnit = null;
-                    
+                    unitBeingPlaced.transform.position = IsometricHelper.gridToGamePostion(cursor.GetComponent<CursorController>().position) +
+                        unitBeingPlaced.GetComponent<UnitController>().spriteOffset;
+                    unitBeingPlaced.GetComponent<UnitController>().isBeingPlacing = true;
                 }
             }
         }
         
-    }
-
-    /**
-     * 
-     * 
-     */
-    public void updateCursor()
-    {
-        cursor.transform.position = IsometricHelper.gridToGamePostion(cursorPosition);
     }
 
     /**
@@ -191,7 +186,7 @@ public class InputController : MonoBehaviour
         if ("Player Unit".Equals(selectedObject.tag))
         {
             movingUnit = true;
-            gameController.selectedUnit = selectedObject;
+            gameController.selectedObject = selectedObject;
             playerUnitUIPanel.SetActive(false);
             panelUIActive = false;
         }
@@ -224,7 +219,8 @@ public class InputController : MonoBehaviour
             case "Player Unit":
                 playerUnitUIPanel.SetActive(true);
                 panelUIActive = true;
-                
+                unitsOriginalFacing = selectedObject.GetComponent<UnitController>().facing;
+                unitsOriginalPosition =  selectedObject.GetComponent<UnitController>().position;
                 Debug.Log("selected Player Unit");
                 break;
             case "Enemy Unit":

@@ -3,20 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class CursorController : MonoBehaviour {
-    public GameObject objectInTile;
+    public GridPosition position;
 
-    void OnTriggerEnter2D(Collider2D other)
+    private void Update()
     {
-        objectInTile = other.gameObject;
-    }
-
-    void OnTriggerStay2D(Collider2D other)
-    {
-        objectInTile = other.gameObject;
-    }
-
-    void OnTriggerExit2D(Collider2D other)
-    {
-        objectInTile = null;
+        transform.position = IsometricHelper.gridToGamePostion(position);
     }
 }

@@ -1,4 +1,6 @@
-﻿[System.Serializable]
+﻿using UnityEngine;
+
+[System.Serializable]
 public struct GridPosition
 {
     public int x;
@@ -23,5 +25,13 @@ public struct GridPosition
     public override string ToString()
     {
         return "x="  + x +","+ "y=" + y + "," + "elevation=" + elevation ;
+    }
+
+    public override bool Equals(object obj)
+    {
+        if (!(obj is GridPosition))
+            return false;
+        GridPosition pos = (GridPosition)obj;
+        return pos.x == x && pos.y == y && pos.elevation == elevation;
     }
 }

@@ -4,12 +4,14 @@ using UnityEngine;
 
 public class PlayerUnitController : UnitController {
 
-    protected void Update()
+    protected override void doUpdateTasks()
     {
+        base.doUpdateTasks();
         animator.SetInteger("Facing", (int)facing);
         checkIfDefeated();
-        transform.position = IsometricHelper.gridToGamePostion(position) + spriteOffset;
+        if (!isBeingPlacing)
+        {
+            transform.position = IsometricHelper.gridToGamePostion(position) + spriteOffset;
+        }
     }
-
-
 }

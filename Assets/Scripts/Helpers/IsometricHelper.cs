@@ -38,7 +38,6 @@ public static class IsometricHelper
     {
         int distanceX = Mathf.Abs(one.x - two.x);
         int distanceY = Mathf.Abs(one.y - two.y);
-        Debug.Log(distanceX + ", " + distanceY);
         return distanceX+distanceY;
     }
 
