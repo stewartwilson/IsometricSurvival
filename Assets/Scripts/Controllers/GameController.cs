@@ -21,15 +21,24 @@ public class GameController : MonoBehaviour
     public bool switchTurn;
     public int turnCounter;
     public int currentRound;
+    public List<PowerUp> powerUps;
 
     // Use this for initialization
     void Awake()
     {
-
+        if(GameObject.Find("Load Game Controller").GetComponent<LoadGameController>().saveData != null)
+        {
+            loadFromController();
+        } else
+        {
+            currentRound = 1;
+            powerUps = new List<PowerUp>();
+        }
     }
 
     private void Start()
     {
+        SceneManager.SetActiveScene(SceneManager.GetSceneByName("Level 1"));
         switchTurn = false;
         turnCounter = 0;
         levelController = GameObject.Find("Level Controller").GetComponent<LevelController>();
@@ -37,6 +46,8 @@ public class GameController : MonoBehaviour
         initTurnOrder();
         displayingMoves = false;
         activeUnit = turnOrder[0];
+
+        SceneManager.UnloadSceneAsync("Persistence");
 
     }
 
@@ -183,6 +194,31 @@ public class GameController : MonoBehaviour
     public void endRound()
     {
         currentRound++;
+        saveProgress();
+    }
+
+    private void saveProgress()
+    {
+        SaveContainer data = new SaveContainer();
+        data.currentRound = currentRound;
+        data.powerUps = powerUps;
+        SaveDataHelper.saveFile(data);
+    }
+
+    private void loadProgress()
+    {
+        SaveContainer data = SaveDataHelper.loadSaveFile();
+        currentRound = data.currentRound;
+        powerUps = data.powerUps;
+        
+    }
+
+    private void loadFromController()
+    {
+        SaveContainer data = GameObject.Find("Load Game Controller").GetComponent<LoadGameController>().saveData;
+        currentRound = data.currentRound;
+        powerUps = data.powerUps;
+
     }
 
 }

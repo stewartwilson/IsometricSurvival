@@ -108,4 +108,80 @@ public static class SaveDataHelper {
     {
         return data.mapName;
     }
+
+
+    public static string createSaveGameName()
+    {
+        return "CurrentSave.gd";
+    }
+
+    public static bool saveFileExists()
+    {
+        string savePath = Application.persistentDataPath + "/" + "CurrentSave.gd";
+        if (File.Exists(savePath))
+        {
+            return true;
+        }
+        return false;
+    }
+
+    public static void saveFile(SaveContainer data)
+    {
+        if (saveFileExists())
+        {
+            updateSaveFile(data);
+        }
+        else
+        {
+            createSaveFile(data);
+        }
+    }
+
+    /**
+     * Saves the save data to the disk
+     */
+    public static void createSaveFile(SaveContainer data)
+    {
+        string savePath = Application.persistentDataPath +"/"+ "CurrentSave.gd";
+        Debug.Log("Saving file to disk " + savePath);
+        BinaryFormatter bf = new BinaryFormatter();
+        FileStream file = File.Create(savePath);
+        bf.Serialize(file, data);
+        file.Close();
+    }
+
+    /**
+     * Saves the save data to the disk
+     */
+    public static void updateSaveFile(SaveContainer data)
+    {
+        string savePath = Application.persistentDataPath + "/" + "CurrentSave.gd";
+        Debug.Log("Saving file to disk " + savePath);
+        BinaryFormatter bf = new BinaryFormatter();
+        FileStream file = new FileStream(savePath, FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.None);
+        file.SetLength(0);
+        bf.Serialize(file, data);
+        file.Close();
+    }
+
+    /**
+     * Loads the save data from the disk
+     */
+    public static SaveContainer loadSaveFile()
+    {
+
+        SaveContainer data = new SaveContainer();
+        string savePath = Application.persistentDataPath + "/" + "CurrentSave.gd"; ;
+        Debug.Log("Loading file from disk " + savePath);
+        if (File.Exists(savePath))
+        {
+            BinaryFormatter bf = new BinaryFormatter();
+            FileStream file = File.Open(savePath, FileMode.Open);
+            data = (SaveContainer)bf.Deserialize(file);
+            Debug.Log(data);
+            file.Close();
+        }
+        return data;
+    }
+
 }

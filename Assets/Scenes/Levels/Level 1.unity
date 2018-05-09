@@ -8615,6 +8615,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: feb646a226dc69049816d41deb1dd9c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cursor: {fileID: 34357741}
   selectedObject: {fileID: 0}
   movesContainer: {fileID: 41829244}
   displayingMoves: 0
@@ -8625,6 +8626,9 @@ MonoBehaviour:
   enemyUnits: []
   levelController: {fileID: 0}
   turnOrder: []
+  activeUnit: {fileID: 0}
+  switchTurn: 0
+  turnCounter: 0
   currentRound: 0
 --- !u!4 &286049449
 Transform:
@@ -9376,7 +9380,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &322385712
 RectTransform:
   m_ObjectHideFlags: 0
@@ -12054,7 +12058,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 796793631}
-        m_MethodName: inspectUnit
+        m_MethodName: waitUnit
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -36265,7 +36269,7 @@ MonoBehaviour:
   behindEnvironmentObject: 0
   position:
     x: 0
-    y: 0
+    y: 4
     elevation: 0
   currentPath: []
   maxMovement: 2

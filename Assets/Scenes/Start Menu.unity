@@ -525,7 +525,7 @@ Prefab:
     - target: {fileID: 114216109294054500, guid: a03c501e4fecdcb48a8201467598c34f,
         type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: OpenLoadGameScreen
+      value: ContinueGame
       objectReference: {fileID: 0}
     - target: {fileID: 1491673627495460, guid: a03c501e4fecdcb48a8201467598c34f, type: 2}
       propertyPath: m_Name
@@ -551,6 +551,15 @@ Prefab:
       propertyPath: m_FirstSelected
       value: 
       objectReference: {fileID: 288341303}
+    - target: {fileID: 114282405618611464, guid: a03c501e4fecdcb48a8201467598c34f,
+        type: 2}
+      propertyPath: m_Text
+      value: Continue Game
+      objectReference: {fileID: 0}
+    - target: {fileID: 1339865691396862, guid: a03c501e4fecdcb48a8201467598c34f, type: 2}
+      propertyPath: m_Name
+      value: Continue Button
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a03c501e4fecdcb48a8201467598c34f, type: 2}
   m_IsPrefabParent: 0

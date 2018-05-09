@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -9,19 +10,33 @@ public class StartMenuController : MonoBehaviour
 
     public GameObject startPanel;
     public GameObject optionsPanel;
+    public GameObject loadGamePanel;
+    public GameObject saveFilePanel;
 
-    public void StartSoloGame()
+    private void Start()
     {
-        Debug.Log("Creating new solo game");
-        //SceneManager.LoadScene("Character Creator");
+        SceneManager.LoadScene("Persistence", LoadSceneMode.Additive);
+    }
+
+    public void StartNewGame()
+    {
+        Debug.Log("Creating new game");
+        SceneManager.LoadScene("Opening Cutscene", LoadSceneMode.Additive);
+        SceneManager.UnloadSceneAsync("Start Menu");
 
     }
 
-    public void StartMultiplayerGame()
+    public void ContinueGame()
     {
-        Debug.Log("Creating new multiplayer game");
-        //SceneManager.LoadScene("Character Creator");
-
+        if (SaveDataHelper.saveFileExists())
+        {
+            GameObject.Find("Load Game Controller").GetComponent<LoadGameController>().saveData = SaveDataHelper.loadSaveFile();
+        } else
+        {
+            Debug.Log("No save data found");
+        }
+        
+        //SceneManager.UnloadSceneAsync("Start Menu");
     }
 
     public void OpenOptions()
