@@ -1,10 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour
 {
+    public GameObject cursor;
     public GameObject selectedObject;
     public GameObject movesContainer;
     public bool displayingMoves;
@@ -14,6 +16,11 @@ public class GameController : MonoBehaviour
     public GameObject enemyUnitsContainer;
     public List<GameObject> enemyUnits;
     public LevelController levelController;
+    public List<GameObject> turnOrder;
+    public GameObject activeUnit;
+    public bool switchTurn;
+    public int turnCounter;
+    public int currentRound;
 
     // Use this for initialization
     void Awake()
@@ -23,15 +30,29 @@ public class GameController : MonoBehaviour
 
     private void Start()
     {
+        switchTurn = false;
+        turnCounter = 0;
         levelController = GameObject.Find("Level Controller").GetComponent<LevelController>();
         populateUnits();
+        initTurnOrder();
         displayingMoves = false;
+        activeUnit = turnOrder[0];
 
     }
 
     // Update is called once per frame
     void Update()
     {
+        if(switchTurn)
+        {
+            activeUnit = turnOrder[turnCounter];
+            cursor.GetComponent<CursorController>().position = activeUnit.GetComponent<UnitController>().position;
+            switchTurn = false;
+        }
+        if("Enemy Unit".Equals(activeUnit.tag))
+        {
+            activeUnit.GetComponent<EnemyUnitController>().takeTurn();
+        }
         if (selectedObject != null && !displayingMoves)
         {
             GridPosition gp = selectedObject.GetComponent<PlayerUnitController>().position;
@@ -132,6 +153,36 @@ public class GameController : MonoBehaviour
         {
             enemyUnits.Add(child.gameObject);
         }
+    }
+
+
+    public void initRound()
+    {
+
+    }
+
+    public void initTurnOrder()
+    {
+        List<GameObject> tempList = new List<GameObject>();
+        tempList.AddRange(playerUnits);
+        tempList.AddRange(enemyUnits);
+        turnOrder.AddRange(tempList.OrderBy(p => p.GetComponent<UnitController>().speed));
+        turnOrder.Reverse();
+    }
+
+    public void endCurrentTurn()
+    {
+        turnCounter++;
+        if(turnCounter >= turnOrder.Count)
+        {
+            turnCounter = 0;
+        }
+        switchTurn = true;
+    }
+
+    public void endRound()
+    {
+        currentRound++;
     }
 
 }

@@ -12,7 +12,7 @@ public class Shoot : Action
     {
         range = 3;
         damage = 1;
-        name = "Shoot";
+        actionName = "Shoot";
     }
 }
 

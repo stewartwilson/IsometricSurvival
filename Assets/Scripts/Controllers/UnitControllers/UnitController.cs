@@ -8,6 +8,7 @@ public class UnitController : MonoBehaviour {
     public bool isSelected;
     public bool isDefeated;
     public int health;
+    public int speed;
     public Facing facing;
     public bool canMove;
     public bool behindEnvironmentObject;
@@ -24,6 +25,12 @@ public class UnitController : MonoBehaviour {
     {
         animator = GetComponent<Animator>();
         isBeingPlacing = false;
+        initiateUnitChacteristics();
+    }
+
+    protected virtual void initiateUnitChacteristics()
+    {
+
     }
 
     protected void checkIfDefeated()

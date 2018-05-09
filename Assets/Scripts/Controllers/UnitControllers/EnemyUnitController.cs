@@ -10,4 +10,9 @@ public class EnemyUnitController : UnitController {
         checkIfDefeated();
         transform.position = IsometricHelper.gridToGamePostion(position) + spriteOffset;
     }
+
+    public void takeTurn()
+    {
+        
+    }
 }

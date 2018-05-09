@@ -21,7 +21,6 @@ GameObject:
   - component: {fileID: 4147708968182290}
   - component: {fileID: 212459823792332538}
   - component: {fileID: 114504264352423396}
-  - component: {fileID: 114743436360130578}
   m_Layer: 0
   m_Name: Walkable Position
   m_TagString: Untagged
@@ -57,20 +56,6 @@ MonoBehaviour:
     x: 0
     y: 0
     elevation: 0
---- !u!114 &114743436360130578
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1526678223377740}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6eb69d313e0ac7f478666f47905b8842, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  xSnap: 0.5
-  ySnap: 0.25
-  snapSortOrder: 0
 --- !u!212 &212459823792332538
 SpriteRenderer:
   m_ObjectHideFlags: 1
