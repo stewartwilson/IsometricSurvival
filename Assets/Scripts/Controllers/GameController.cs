@@ -22,11 +22,15 @@ public class GameController : MonoBehaviour
     public int turnCounter;
     public int currentRound;
     public List<PowerUp> powerUps;
+    public bool isNight;
+    private GameObject persistence;
 
     // Use this for initialization
     void Awake()
     {
-        if(GameObject.Find("Load Game Controller").GetComponent<LoadGameController>().saveData != null)
+        persistence = GameObject.Find("Load Game Controller");
+        if (persistence != null && persistence.GetComponent<LoadGameController>().saveData != null 
+            && persistence.GetComponent<LoadGameController>().saveData.currentRound != 0)
         {
             loadFromController();
         } else
@@ -38,7 +42,7 @@ public class GameController : MonoBehaviour
 
     private void Start()
     {
-        SceneManager.SetActiveScene(SceneManager.GetSceneByName("Level 1"));
+        SceneManager.SetActiveScene(SceneManager.GetSceneByName("Main Game"));
         switchTurn = false;
         turnCounter = 0;
         levelController = GameObject.Find("Level Controller").GetComponent<LevelController>();
@@ -46,8 +50,6 @@ public class GameController : MonoBehaviour
         initTurnOrder();
         displayingMoves = false;
         activeUnit = turnOrder[0];
-
-        SceneManager.UnloadSceneAsync("Persistence");
 
     }
 
@@ -79,6 +81,14 @@ public class GameController : MonoBehaviour
             {
                 destroyMovesDisplay();
             }
+        }
+        if(checkForPlayerLoss())
+        {
+            playerLoses();
+        }
+        if(checkForRoundOver())
+        {
+            endRound();
         }
     }
 
@@ -194,7 +204,41 @@ public class GameController : MonoBehaviour
     public void endRound()
     {
         currentRound++;
-        saveProgress();
+        SaveContainer data = new SaveContainer();
+        data.currentRound = currentRound;
+        data.powerUps = powerUps;
+        persistence.GetComponent<LoadGameController>().saveData = data;
+        saveProgress(data);
+        SceneManager.LoadScene("Tavern", LoadSceneMode.Additive);
+        SceneManager.UnloadSceneAsync("Main Game");
+    }
+
+    public bool checkForRoundOver()
+    {
+        bool roundOver = true;
+        foreach(GameObject enemy in enemyUnits)
+        {
+            if(enemy.GetComponent<UnitController>().health > 0)
+            {
+                roundOver = false;
+            }
+        }
+
+        return roundOver;
+    }
+
+    public bool checkForPlayerLoss()
+    {
+        bool playerLoss = true;
+        foreach (GameObject unit in playerUnits)
+        {
+            if (unit.GetComponent<UnitController>().health > 0)
+            {
+                playerLoss = false;
+            }
+        }
+
+        return playerLoss;
     }
 
     private void saveProgress()
@@ -202,6 +246,11 @@ public class GameController : MonoBehaviour
         SaveContainer data = new SaveContainer();
         data.currentRound = currentRound;
         data.powerUps = powerUps;
+        SaveDataHelper.saveFile(data);
+    }
+
+    private void saveProgress(SaveContainer data)
+    {
         SaveDataHelper.saveFile(data);
     }
 
@@ -221,4 +270,8 @@ public class GameController : MonoBehaviour
 
     }
 
+    private void playerLoses()
+    {
+        Debug.Log("Player has no more living units");
+    }
 }

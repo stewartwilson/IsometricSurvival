@@ -123,7 +123,7 @@ GameObject:
   - component: {fileID: 323032882}
   - component: {fileID: 323032881}
   m_Layer: 0
-  m_Name: Cutscene Controller
+  m_Name: Tavern Controller
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -137,11 +137,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 323032880}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1b2fb75fe29583d4395672c658007817, type: 3}
+  m_Script: {fileID: 11500000, guid: 899798e56a387e24cbbe996188b22bc1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentSceneName: Opening Cutscene
-  nextSceneName: Main Game
+  currentSceneName: Tavern
 --- !u!4 &323032882
 Transform:
   m_ObjectHideFlags: 0
@@ -278,13 +277,13 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 10
     m_MaxSize: 51
-    m_Alignment: 0
+    m_Alignment: 1
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Opening Cutscene
+  m_Text: In Tavern
 --- !u!222 &527726323
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -396,7 +395,7 @@ GameObject:
   - component: {fileID: 1847615908}
   - component: {fileID: 1847615907}
   m_Layer: 0
-  m_Name: Cutscene Input Controller
+  m_Name: Tavern Input Controller
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -410,7 +409,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1847615906}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2329b4146f9514b48b2dd046a8dc7dfd, type: 3}
+  m_Script: {fileID: 11500000, guid: b817a58e7bdc5dd46a62ac7a82cb2140, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!4 &1847615908
