@@ -150,10 +150,11 @@ public class InputController : MonoBehaviour
                     cursor.GetComponent<CursorController>().position = cursorPosition;
 
                     nextCursorMoveAllowed = Time.time + cursorDelay;
+                    
                 }
+                
                 if (selectedObject == null)
                 {
-                    Debug.Log("no selected");
                     if (enter)
                     {
                         Debug.Log("enter");
@@ -163,6 +164,9 @@ public class InputController : MonoBehaviour
                             selectObject(obj);
 
                         }
+                    } else if (back)
+                    {
+                        cursor.GetComponent<CursorController>().position = unitsOriginalPosition;
                     }
                 }
                 else if (movingUnit && back)

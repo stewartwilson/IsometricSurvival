@@ -8632,6 +8632,8 @@ MonoBehaviour:
   currentRound: 0
   powerUps: []
   isNight: 0
+  enemySet: {fileID: 11400000, guid: 236db5e1214a5aa4a84c3b6f06ff84b3, type: 2}
+  enemyPrefabs: []
 --- !u!4 &286049449
 Transform:
   m_ObjectHideFlags: 0
@@ -24505,85 +24507,6 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
---- !u!1001 &745392055
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 1050233467}
-    m_Modifications:
-    - target: {fileID: 4142102329190564, guid: 051d744733118314183b3fc84d7a9e5a, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4142102329190564, guid: 051d744733118314183b3fc84d7a9e5a, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4142102329190564, guid: 051d744733118314183b3fc84d7a9e5a, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4142102329190564, guid: 051d744733118314183b3fc84d7a9e5a, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4142102329190564, guid: 051d744733118314183b3fc84d7a9e5a, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4142102329190564, guid: 051d744733118314183b3fc84d7a9e5a, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4142102329190564, guid: 051d744733118314183b3fc84d7a9e5a, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4142102329190564, guid: 051d744733118314183b3fc84d7a9e5a, type: 2}
-      propertyPath: m_RootOrder
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114885021789382598, guid: 051d744733118314183b3fc84d7a9e5a,
-        type: 2}
-      propertyPath: spriteOffset.y
-      value: 0.4
-      objectReference: {fileID: 0}
-    - target: {fileID: 114885021789382598, guid: 051d744733118314183b3fc84d7a9e5a,
-        type: 2}
-      propertyPath: position.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114885021789382598, guid: 051d744733118314183b3fc84d7a9e5a,
-        type: 2}
-      propertyPath: position.x
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 114885021789382598, guid: 051d744733118314183b3fc84d7a9e5a,
-        type: 2}
-      propertyPath: unit
-      value: 
-      objectReference: {fileID: 11400000, guid: e8e0827c40f0eb94da9a49798c3cc851,
-        type: 2}
-    - target: {fileID: 212179489591447354, guid: 051d744733118314183b3fc84d7a9e5a,
-        type: 2}
-      propertyPath: m_Color.r
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 212179489591447354, guid: 051d744733118314183b3fc84d7a9e5a,
-        type: 2}
-      propertyPath: m_Color.g
-      value: 0.42647058
-      objectReference: {fileID: 0}
-    - target: {fileID: 212179489591447354, guid: 051d744733118314183b3fc84d7a9e5a,
-        type: 2}
-      propertyPath: m_Color.b
-      value: 0.42647058
-      objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 114885021789382598, guid: 051d744733118314183b3fc84d7a9e5a, type: 2}
-  m_ParentPrefab: {fileID: 100100000, guid: 051d744733118314183b3fc84d7a9e5a, type: 2}
-  m_IsPrefabParent: 0
 --- !u!1 &746091203
 GameObject:
   m_ObjectHideFlags: 0
@@ -25397,40 +25320,6 @@ MonoBehaviour:
     elevation: 0
   currentPath: []
   maxMovement: 2
-  spriteOffset: {x: 0, y: 0.4}
-  action1: {fileID: 0}
-  action2: {fileID: 0}
-  isBeingPlacing: 0
---- !u!1 &771806782 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1867821879704966, guid: 051d744733118314183b3fc84d7a9e5a,
-    type: 2}
-  m_PrefabInternal: {fileID: 745392055}
---- !u!114 &771806783
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 771806782}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b611baa7f52dd124ba442d9cb41af2bb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isPlayerUnit: 0
-  isSelected: 0
-  isDefeated: 0
-  health: 10
-  speed: 7
-  facing: 0
-  canMove: 0
-  behindEnvironmentObject: 0
-  position:
-    x: 2
-    y: 0
-    elevation: 0
-  currentPath: []
-  maxMovement: 0
   spriteOffset: {x: 0, y: 0.4}
   action1: {fileID: 0}
   action2: {fileID: 0}
@@ -33698,8 +33587,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 2054007810}
+  m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -60581,8 +60469,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2847a1ccf7126eb45abd13bace14dbbd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  xSpeed: 1
-  ySpeed: 1
+  xSpeed: 2
+  ySpeed: 2
+  zoomSpeed: 0.05
+  maxCameraDistance: 5
+  minCameraDistance: 2
+  maxCameraX: 10
+  minCameraX: -10
+  maxCameraY: 10
+  minCameraY: 0
 --- !u!1 &1881323189
 GameObject:
   m_ObjectHideFlags: 0
@@ -65740,11 +65635,6 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
---- !u!4 &2054007810 stripped
-Transform:
-  m_PrefabParentObject: {fileID: 4142102329190564, guid: 051d744733118314183b3fc84d7a9e5a,
-    type: 2}
-  m_PrefabInternal: {fileID: 745392055}
 --- !u!1 &2058494190
 GameObject:
   m_ObjectHideFlags: 0

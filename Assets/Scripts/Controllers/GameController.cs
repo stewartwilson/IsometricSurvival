@@ -24,6 +24,8 @@ public class GameController : MonoBehaviour
     public List<PowerUp> powerUps;
     public bool isNight;
     private GameObject persistence;
+    public EnemySet enemySet;
+    public List<GameObject> enemyPrefabs;
 
     // Use this for initialization
     void Awake()
@@ -51,6 +53,7 @@ public class GameController : MonoBehaviour
         displayingMoves = false;
         activeUnit = turnOrder[0];
 
+
     }
 
     // Update is called once per frame
@@ -62,7 +65,7 @@ public class GameController : MonoBehaviour
             cursor.GetComponent<CursorController>().position = activeUnit.GetComponent<UnitController>().position;
             switchTurn = false;
         }
-        if("Enemy Unit".Equals(activeUnit.tag))
+        if((activeUnit != null) && "Enemy Unit".Equals(activeUnit.tag))
         {
             activeUnit.GetComponent<EnemyUnitController>().takeTurn();
         }
@@ -169,10 +172,14 @@ public class GameController : MonoBehaviour
         {
             playerUnits.Add(child.gameObject);
         }
-
-        foreach (Transform child in enemyUnitsContainer.transform)
+        if (enemySet != null)
         {
-            enemyUnits.Add(child.gameObject);
+            foreach (EnemyMap enemy in enemySet.enemies)
+            {
+                GameObject go = instantiateEnemyType(enemy.enemyType, enemy.position);
+                go.transform.SetParent(enemyUnitsContainer.transform);
+                enemyUnits.Add(go);
+            }
         }
     }
 
@@ -273,5 +280,21 @@ public class GameController : MonoBehaviour
     private void playerLoses()
     {
         Debug.Log("Player has no more living units");
+    }
+
+    public GameObject instantiateEnemyType(EnemyType enemyType, GridPosition position)
+    {
+        GameObject enemy = null;
+
+        switch (enemyType)
+        {
+            case EnemyType.Zombie:
+
+                enemy = (GameObject)Instantiate(Resources.Load("Zombie"));
+                enemy.GetComponent<EnemyUnitController>().position = position;
+                break;
+        }
+
+        return enemy;
     }
 }
