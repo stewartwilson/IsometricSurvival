@@ -1,14 +1,22 @@
 ﻿using UnityEngine;
 
-public class Action : MonoBehaviour
+[System.Serializable]
+public class Action
 {
     public string actionName;
     public GameObject actor;
     public GameObject target;
+    public int range;
+    public bool canTargetSelf;
 
-    public void act()
+    public virtual void act()
     {
-        Debug.Log(actionName + "," + actor.name + "," + target.name);
+        Debug.Log(this);
+    }
+
+    public override string ToString()
+    {
+        return actionName;
     }
 
 }

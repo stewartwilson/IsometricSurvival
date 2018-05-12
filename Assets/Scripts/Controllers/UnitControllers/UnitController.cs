@@ -17,8 +17,7 @@ public class UnitController : MonoBehaviour {
     public List<GridPosition> currentPath;
     public int maxMovement;
     public Vector2 spriteOffset;
-    public Action action1;
-    public Action action2;
+    public ActionSet actionSet;
     public bool isBeingPlacing;
 
     protected void Start()
@@ -30,7 +29,7 @@ public class UnitController : MonoBehaviour {
 
     protected virtual void initiateUnitChacteristics()
     {
-
+        
     }
 
     protected void checkIfDefeated()
@@ -68,13 +67,28 @@ public class UnitController : MonoBehaviour {
 
     }
 
-    public virtual void doAction1()
+    public virtual Action doMoveAction()
     {
+        actionSet.actions[0].hasBeenDone = true;
 
+        return actionSet.actions[0].action;
     }
 
-    public virtual void doAction2()
+    public virtual Action doWaitAction()
     {
+        actionSet.actions[1].hasBeenDone = true;
+        return actionSet.actions[1].action;
+    }
 
+    public virtual Action doAction1()
+    {
+        actionSet.actions[2].hasBeenDone = true;
+        return actionSet.actions[2].action;
+    }
+
+    public virtual Action doAction2()
+    {
+        actionSet.actions[3].hasBeenDone = true;
+        return actionSet.actions[3].action;
     }
 }

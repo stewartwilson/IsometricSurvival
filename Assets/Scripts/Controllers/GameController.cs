@@ -6,25 +6,55 @@ using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour
 {
+    //Holds the cursor object used for controlling the game
     public GameObject cursor;
+    //Holds which unit is selected by the cursor
     public GameObject selectedObject;
+    //Holds the object that displays possible moves for a unit
     public GameObject movesContainer;
+    //Holds the object that displays possible targets for a unit's action
+    public GameObject targetsContainer;
+    //True if attemtping to move a unit
     public bool displayingMoves;
+    //True if attemtping to take an action
+    public bool displayingTargets;
+    //True if attemtping to take an action
+    public bool displayingActionTargets;
+    //Action that a unit is currently taking
+    public Action activeAction;
+    //Holds the grid positions for a selected units possible moves
     public List<GridPosition> possibleMoves;
+    //Holds the grid positions for a selected actions targets
+    public List<GridPosition> possibleTargets;
+    //Parent object for units the player controls
     public GameObject playerUnitsContainer;
+    //Holds all unit game objects that are the players 
     public List<GameObject> playerUnits;
+    //Parent object for units the player does not control
     public GameObject enemyUnitsContainer;
+    //Holds all unit game objects that are enemies 
     public List<GameObject> enemyUnits;
+    //The level controller is in charge of map actions
     public LevelController levelController;
+    //this list is generated at the start of each round to store turn order
     public List<GameObject> turnOrder;
+    //This object holds the unit whose turn it is
     public GameObject activeUnit;
+    //Will switch active unit with true
     public bool switchTurn;
+    //Used to determine which unit's turn it is
     public int turnCounter;
+    //Tracks the current round to be used when generating level data
     public int currentRound;
+    //Keeps track of the players current power ups
     public List<PowerUp> powerUps;
+    //determines if the level is day or night
     public bool isNight;
+    //object incharge of holding save info
     private GameObject persistence;
+    //Enemy spawn info for the current level
     public EnemySet enemySet;
+    //Prefabs for all possible enemy types
     public List<GameObject> enemyPrefabs;
 
     // Use this for initialization
@@ -69,20 +99,19 @@ public class GameController : MonoBehaviour
         {
             activeUnit.GetComponent<EnemyUnitController>().takeTurn();
         }
-        if (selectedObject != null && !displayingMoves)
+        if (selectedObject != null && !displayingActionTargets)
         {
             GridPosition gp = selectedObject.GetComponent<PlayerUnitController>().position;
-            int maxMovement = selectedObject.GetComponent<PlayerUnitController>().maxMovement;
-            possibleMoves = getPossibleMovement(gp, maxMovement);
+            possibleTargets = getPossibleActionTargets(gp, activeAction);
 
-            InstantiateMovesDisplay(possibleMoves);
-            displayingMoves = true;
+            InstantiateTargetsDisplay(possibleTargets);
+            displayingActionTargets = true;
         }
         else if (selectedObject == null)
         {
-            if (displayingMoves)
+            if (displayingActionTargets)
             {
-                destroyMovesDisplay();
+                destroyTargetsDisplay();
             }
         }
         if(checkForPlayerLoss())
@@ -119,6 +148,25 @@ public class GameController : MonoBehaviour
         }
     }
 
+    private void InstantiateTargetsDisplay(List<GridPosition> targets)
+    {
+        int count = 0;
+        foreach (GridPosition pos in targets)
+        {
+            count++;
+            GameObject go = null;
+            GameObject unit = getObjectAtPosition(pos);
+            if (unit == null)
+            {
+                go = (GameObject)Instantiate(Resources.Load("Possible Move"));
+            }
+            go.transform.SetParent(targetsContainer.transform);
+            go.transform.position = IsometricHelper.gridToGamePostion(pos);
+            go.GetComponent<SpriteRenderer>().sortingOrder = IsometricHelper.getTileSortingOrder(pos);
+            go.name = "Target " + count;
+        }
+    }
+
     public GameObject getObjectAtPosition(GridPosition position)
     {
         foreach (GameObject unit in playerUnits)
@@ -149,6 +197,7 @@ public class GameController : MonoBehaviour
         displayingMoves = false;
     }
 
+
     public List<GridPosition> getPossibleMovement(GridPosition currentPos, int maxMovement)
     {
         Debug.Log(currentPos + ", " + maxMovement);
@@ -164,6 +213,32 @@ public class GameController : MonoBehaviour
         }
 
         return possibleMoves;
+    }
+
+    public List<GridPosition> getPossibleActionTargets(GridPosition currentPos, Action action)
+    {
+        Debug.Log(currentPos + ", " + action);
+        List<GridPosition> possibleTargets = new List<GridPosition>();
+        foreach (WalkableArea wa in levelController.walkableArea)
+        {
+            //TODO account for elevation difference
+            if (IsometricHelper.distanceBetweenGridPositions(wa.position, currentPos) <= action.range &&
+                getObjectAtPosition(wa.position) == null)
+            {
+                possibleTargets.Add(wa.position);
+            }
+        }
+
+        return possibleTargets;
+    }
+
+    public void destroyTargetsDisplay()
+    {
+        foreach (Transform child in targetsContainer.transform)
+        {
+            Destroy(child.gameObject);
+        }
+        displayingTargets = false;
     }
 
     void populateUnits()

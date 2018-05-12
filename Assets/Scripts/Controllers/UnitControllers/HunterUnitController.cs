@@ -5,20 +5,30 @@ using UnityEngine;
 public class HunterUnitController : PlayerUnitController
 {
 
-    public override void doAction1()
+    public override Action doAction1()
     {
-        action1.act();
+        return base.doAction1();
     }
 
-    public override void doAction2()
+    public override Action doAction2()
     {
-        action2.act();
+        return base.doAction2();
     }
 
     protected override void initiateUnitChacteristics()
     {
-        action1 = new Shoot();
-        action2 = new Melee();
+        Move move = new Move();
+        Shoot shoot = new Shoot();
+        Trap trap = new Trap();
+        Wait wait = new Wait();
+        actionSet.actions.Add(new ActionMap(move, false));
+        actionSet.actions.Add(new ActionMap(wait, false));
+        actionSet.actions.Add(new ActionMap(shoot, false));
+        actionSet.actions.Add(new ActionMap(trap, false));
+        foreach (ActionMap actionMap in actionSet.actions)
+        {
+            actionMap.action.actor = gameObject;
+        }
     }
 
 }

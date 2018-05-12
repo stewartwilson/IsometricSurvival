@@ -468,8 +468,7 @@ MonoBehaviour:
   currentPath: []
   maxMovement: 2
   spriteOffset: {x: 0, y: 0.4}
-  action1: {fileID: 0}
-  action2: {fileID: 0}
+  actionSet: {fileID: 11400000, guid: 25c1d51e668b894439ee018b9390d42f, type: 2}
   isBeingPlacing: 0
 --- !u!1 &26492351
 GameObject:
@@ -1013,7 +1012,7 @@ GameObject:
   m_Component:
   - component: {fileID: 41829245}
   m_Layer: 0
-  m_Name: Moves Container
+  m_Name: Targets Container
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8618,8 +8617,18 @@ MonoBehaviour:
   cursor: {fileID: 34357741}
   selectedObject: {fileID: 0}
   movesContainer: {fileID: 41829244}
+  targetsContainer: {fileID: 41829244}
   displayingMoves: 0
+  displayingTargets: 0
+  displayingActionTargets: 0
+  activeAction:
+    actionName: 
+    actor: {fileID: 0}
+    target: {fileID: 0}
+    range: 0
+    canTargetSelf: 0
   possibleMoves: []
+  possibleTargets: []
   playerUnitsContainer: {fileID: 1992074158}
   playerUnits: []
   enemyUnitsContainer: {fileID: 1050233466}
@@ -25321,8 +25330,7 @@ MonoBehaviour:
   currentPath: []
   maxMovement: 2
   spriteOffset: {x: 0, y: 0.4}
-  action1: {fileID: 0}
-  action2: {fileID: 0}
+  actionSet: {fileID: 11400000, guid: 25c1d51e668b894439ee018b9390d42f, type: 2}
   isBeingPlacing: 0
 --- !u!1 &772379807
 GameObject:
@@ -26413,6 +26421,7 @@ MonoBehaviour:
   touching: 0
   selectedObject: {fileID: 0}
   movingUnit: 0
+  unitTakingAction: 0
   inspectingUnit: 0
   placingUnit: 0
   unitBeingPlaced: {fileID: 0}
@@ -35419,7 +35428,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 796793631}
-        m_MethodName: moveUnit
+        m_MethodName: doAction1
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -36164,8 +36173,7 @@ MonoBehaviour:
   currentPath: []
   maxMovement: 2
   spriteOffset: {x: 0, y: 0.4}
-  action1: {fileID: 0}
-  action2: {fileID: 0}
+  actionSet: {fileID: 11400000, guid: 25c1d51e668b894439ee018b9390d42f, type: 2}
   isBeingPlacing: 0
 --- !u!1 &1158166041
 GameObject:
@@ -36244,7 +36252,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 796793631}
-        m_MethodName: moveUnit
+        m_MethodName: doAction2
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

@@ -20,8 +20,9 @@ public class InputController : MonoBehaviour
     //Hold an object that the cursor has selected
     public GameObject selectedObject;
     public bool movingUnit;
+    public bool unitTakingAction;
     public bool inspectingUnit;
-    public bool placingUnit;
+    public bool turningUnit;
     //holds unit being move to determine location and directino facing
     public GameObject unitBeingPlaced;
     //holds units original location before an attempted move
@@ -66,7 +67,7 @@ public class InputController : MonoBehaviour
                     selectedObject = null;
                 }
             }
-            else if (placingUnit)
+            else if (turningUnit)
             {
                 if (vertical > 0)
                 {
@@ -84,27 +85,18 @@ public class InputController : MonoBehaviour
                 {
                     unitBeingPlaced.GetComponent<UnitController>().facing = Facing.Forward;
                 }
-                if (back)
+                if (enter)
                 {
-                    unitBeingPlaced.GetComponent<UnitController>().isBeingPlacing = false;
-                    unitBeingPlaced.transform.position = IsometricHelper.gridToGamePostion(unitsOriginalPosition) +
-                            unitBeingPlaced.GetComponent<UnitController>().spriteOffset;
-                    unitBeingPlaced.GetComponent<UnitController>().facing = unitsOriginalFacing;
-                    unitBeingPlaced = null;
-                    placingUnit = false;
-                    movingUnit = true;
-                    back = false;
-
-                }
-                else if (enter)
-                {
-                    placingUnit = false;
-                    movingUnit = false;
                     gameController.moveUnit(cursor.GetComponent<CursorController>().position);
                     unitBeingPlaced.GetComponent<UnitController>().isBeingPlacing = false;
                     selectedObject = null;
-                    unitBeingPlaced = null;
                     gameController.selectedObject = null;
+                    panelUIActive = false;
+                    selectedObject = null;
+                    unitBeingPlaced = null;
+                    unitTakingAction = false;
+                    playerUnitUIPanel.SetActive(false); 
+                    gameController.endCurrentTurn();
                 }
             }
             else
@@ -169,26 +161,31 @@ public class InputController : MonoBehaviour
                         cursor.GetComponent<CursorController>().position = unitsOriginalPosition;
                     }
                 }
-                else if (movingUnit && back)
+                else if (unitTakingAction && back)
                 {
                     back = false;
-                    movingUnit = false;
+                    unitTakingAction = false;
                     gameController.destroyMovesDisplay();
                     gameController.selectedObject = null;
                     cursor.GetComponent<CursorController>().position = selectedObject.GetComponent<UnitController>().position;
                     playerUnitUIPanel.SetActive(true);
                     panelUIActive = true;
                 }
-                else if (movingUnit && enter)
+                else if (unitTakingAction && enter)
                 {
-                    if (gameController.possibleMoves.Contains(cursor.GetComponent<CursorController>().position))
+                    if (gameController.possibleTargets.Contains(cursor.GetComponent<CursorController>().position))
                     {
-                        movingUnit = false;
-                        placingUnit = true;
-                        unitBeingPlaced = selectedObject;
-                        unitBeingPlaced.transform.position = IsometricHelper.gridToGamePostion(cursor.GetComponent<CursorController>().position) +
-                            unitBeingPlaced.GetComponent<UnitController>().spriteOffset;
-                        unitBeingPlaced.GetComponent<UnitController>().isBeingPlacing = true;
+                        unitTakingAction = false;
+                        if (gameController.activeAction is Move) {
+                            ((Move)gameController.activeAction).destination = cursor.GetComponent<CursorController>().position;
+                            gameController.activeAction.act();
+                            selectedObject = null;
+                            gameController.selectedObject = null;
+                        }
+                        //unitBeingPlaced = selectedObject;
+                        //unitBeingPlaced.transform.position = IsometricHelper.gridToGamePostion(cursor.GetComponent<CursorController>().position) +
+                        //    unitBeingPlaced.GetComponent<UnitController>().spriteOffset;
+                        //unitBeingPlaced.GetComponent<UnitController>().isBeingPlacing = true;
                     }
                 }
             }
@@ -204,12 +201,64 @@ public class InputController : MonoBehaviour
     {
         if ("Player Unit".Equals(selectedObject.tag))
         {
-            movingUnit = true;
+            unitTakingAction = true;
+            gameController.activeAction = selectedObject.GetComponent<UnitController>().doMoveAction();
             gameController.selectedObject = selectedObject;
             playerUnitUIPanel.SetActive(false);
             panelUIActive = false;
         }
         
+    }
+
+    /**
+     * Do acton 1 is called by UI button click
+     * This will do the 1st action of the selected unit
+     */
+    public void doAction1()
+    {
+        if ("Player Unit".Equals(selectedObject.tag))
+        {
+            unitTakingAction = true;
+            gameController.activeAction = selectedObject.GetComponent<UnitController>().doAction1();
+            gameController.selectedObject = selectedObject;
+            playerUnitUIPanel.SetActive(false);
+            panelUIActive = false;
+        }
+
+    }
+
+    /**
+     * Do acton 2 is called by UI button click
+     * This will do the 2st action of the selected unit
+     */
+    public void doAction2()
+    {
+        if ("Player Unit".Equals(selectedObject.tag))
+        {
+            unitTakingAction = true;
+            gameController.activeAction = selectedObject.GetComponent<UnitController>().doAction2();
+            gameController.selectedObject = selectedObject;
+            playerUnitUIPanel.SetActive(false);
+            panelUIActive = false;
+        }
+
+    }
+
+    /**
+     * 
+     * 
+     */
+    public void waitUnit()
+    {
+        if ("Player Unit".Equals(selectedObject.tag))
+        {
+            Debug.Log("End Turn");
+            unitTakingAction = true;
+            turningUnit = true;
+            gameController.activeAction = selectedObject.GetComponent<UnitController>().doWaitAction();
+           
+        }
+
     }
 
     /**
@@ -226,23 +275,7 @@ public class InputController : MonoBehaviour
 
     }
 
-    /**
-     * 
-     * 
-     */
-    public void waitUnit()
-    {
-        if ("Player Unit".Equals(selectedObject.tag))
-        {
-            Debug.Log("End Turn");
-            gameController.endCurrentTurn();
-            playerUnitUIPanel.SetActive(false);
-            panelUIActive = false;
-            selectedObject = null;
-            unitBeingPlaced = null;
-        }
-
-    }
+    
 
     /**
      * 

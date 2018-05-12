@@ -5,14 +5,14 @@ using UnityEngine;
 public class ContractorUnitController : PlayerUnitController
 {
 
-    public override void doAction1()
+    public override Action doAction1()
     {
-        action1.act();
+        return base.doAction1();
     }
 
-    public override void doAction2()
+    public override Action doAction2()
     {
-        action2.act();
+        return base.doAction2();
     }
 
 }
