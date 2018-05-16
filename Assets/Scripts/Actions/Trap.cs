@@ -2,14 +2,17 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using UnityEngine;
 
 public class Trap : Action
 {
     public GridPosition destination;
+    public int damage;
 
     public Trap()
     {
         range = 1;
+        damage = 1;
         canTargetSelf = false;
         canTargetUnit = false;
         actionName = "Trap";
@@ -18,7 +21,7 @@ public class Trap : Action
     public override void act()
     {
         base.act();
-        //create trap prefab at destination;
+        GameObject.Find("ActionPrefabHelper").GetComponent<ActionPrefabHelper>().initTrap(this);
     }
 
     public override string ToString()

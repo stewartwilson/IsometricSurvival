@@ -308,7 +308,7 @@ public class InputController : MonoBehaviour
                             }
                             if (gameController.activeAction is Trap)
                             {
-                                ((Move)gameController.activeAction).destination = cursor.GetComponent<CursorController>().position;
+                                ((Trap)gameController.activeAction).destination = cursor.GetComponent<CursorController>().position;
                                 gameController.activeAction.act();
                                 selectedObject = null;
                                 gameController.selectedObject = null;
