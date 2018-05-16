@@ -36,6 +36,8 @@ public class InputController : MonoBehaviour
         gameController = GameObject.Find("Game Controller").GetComponent<GameController>();
         maxCursorXPos = gameController.levelController.maxX;
         maxCursorYPos = gameController.levelController.maxY;
+        unitBeingPlaced = gameController.playerUnits[0];
+        unitBeingPlaced.SetActive(true);
     }
 
     private void Update()
@@ -44,148 +46,255 @@ public class InputController : MonoBehaviour
         float horizontal = Input.GetAxis("Horizontal");
         bool enter = Input.GetButtonDown("Submit");
         bool back = Input.GetButtonDown("Back");
-        if (inspectingUnit)
+        if (gameController.tavern.GetComponent<Tavern>().placingUnits)
         {
-            if (back)
+            Tavern tavern = gameController.tavern.GetComponent<Tavern>();
+            if (!(Time.time < nextCursorMoveAllowed))
             {
-                inspectingUnit = false;
-                playerUnitUIPanel.SetActive(false);
-                enemyUnitUIPanel.SetActive(false);
-                panelUIActive = false;
-                selectedObject = null;
+                GridPosition cursorPosition = cursor.GetComponent<CursorController>().position;
+                GridPosition startPostion = new GridPosition(cursorPosition.x, cursorPosition.y, cursorPosition.elevation);
+                if (vertical > 0)
+                {
+                    cursorPosition.x++;
+                }
+                if (vertical < 0)
+                {
+                    cursorPosition.x--;
+                }
+                if (horizontal > 0)
+                {
+                    cursorPosition.y--;
+                }
+                if (horizontal < 0)
+                {
+                    cursorPosition.y++;
+                }
+
+                if (cursorPosition.y < 0)
+                {
+                    cursorPosition.y = 0;
+                }
+                if (cursorPosition.x < 0)
+                {
+                    cursorPosition.x = 0;
+                }
+                if (cursorPosition.y > maxCursorYPos)
+                {
+                    cursorPosition.y = maxCursorYPos;
+                }
+                if (cursorPosition.x > maxCursorXPos)
+                {
+                    cursorPosition.x = maxCursorXPos;
+                }
+                cursor.GetComponent<CursorController>().position = cursorPosition;
+
+                nextCursorMoveAllowed = Time.time + cursorDelay;
+            }
+            if(tavern.spawnPoints.Contains(cursor.GetComponent<CursorController>().position) && !unitBeingPlaced.GetComponent<UnitController>().inGame)
+            {
+                unitBeingPlaced.GetComponent<UnitController>().position = cursor.GetComponent<CursorController>().position;
+                unitBeingPlaced.SetActive(true);
+            } else
+            {
+                if (!unitBeingPlaced.GetComponent<UnitController>().inGame)
+                {
+                    unitBeingPlaced.SetActive(false);
+                }
+            }
+            if (enter)
+            {
+                if (tavern.spawnPoints.Contains(cursor.GetComponent<CursorController>().position))
+                {
+                    unitBeingPlaced.GetComponent<UnitController>().position = cursor.GetComponent<CursorController>().position;
+                    unitBeingPlaced.GetComponent<UnitController>().inGame = true;
+                }
+
+            }
+            if (Input.GetButtonDown("Next Unit"))
+            {
+                int index = gameController.playerUnits.IndexOf(unitBeingPlaced);
+                if (index < gameController.playerUnits.Count - 1)
+                {
+                    index++;
+                }
+                else
+                {
+                    index = 0;
+                }
+                if (!unitBeingPlaced.GetComponent<UnitController>().inGame)
+                {
+                    unitBeingPlaced.SetActive(false);
+                }
+                unitBeingPlaced = gameController.playerUnits[index];
+                unitBeingPlaced.SetActive(true);
+            }
+            if (Input.GetButtonDown("Previous Unit"))
+            {
+                int index = gameController.playerUnits.IndexOf(unitBeingPlaced);
+                if (index > 0)
+                {
+                    index--;
+                }
+                else
+                {
+                    index = gameController.playerUnits.Count - 1;
+                }
+                if (!unitBeingPlaced.GetComponent<UnitController>().inGame)
+                {
+                    unitBeingPlaced.SetActive(false);
+                }
+                unitBeingPlaced = gameController.playerUnits[index];
+                unitBeingPlaced.SetActive(true);
+            }
+            if (Input.GetButtonDown("Start"))
+            {
+                gameController.tavern.GetComponent<Tavern>().placingUnits = false;
             }
         }
         else
         {
-            if (panelUIActive)
+            if (inspectingUnit)
             {
                 if (back)
                 {
+                    inspectingUnit = false;
                     playerUnitUIPanel.SetActive(false);
                     enemyUnitUIPanel.SetActive(false);
                     panelUIActive = false;
                     selectedObject = null;
                 }
             }
-            else if (turningUnit)
-            {
-                if (vertical > 0)
-                {
-                    unitBeingPlaced.GetComponent<UnitController>().facing = Facing.Left;
-                }
-                if (vertical < 0)
-                {
-                    unitBeingPlaced.GetComponent<UnitController>().facing = Facing.Right;
-                }
-                if (horizontal > 0)
-                {
-                    unitBeingPlaced.GetComponent<UnitController>().facing = Facing.Back;
-                }
-                if (horizontal < 0)
-                {
-                    unitBeingPlaced.GetComponent<UnitController>().facing = Facing.Forward;
-                }
-                if (enter)
-                {
-                    gameController.moveUnit(cursor.GetComponent<CursorController>().position);
-                    unitBeingPlaced.GetComponent<UnitController>().isBeingPlacing = false;
-                    selectedObject = null;
-                    gameController.selectedObject = null;
-                    panelUIActive = false;
-                    selectedObject = null;
-                    unitBeingPlaced = null;
-                    unitTakingAction = false;
-                    playerUnitUIPanel.SetActive(false); 
-                    gameController.endCurrentTurn();
-                }
-            }
             else
             {
-                //resonsible for moving cursor when nothing is selected
-                if (!(Time.time < nextCursorMoveAllowed))
+                if (panelUIActive)
                 {
-                    GridPosition cursorPosition = cursor.GetComponent<CursorController>().position;
-                    GridPosition startPostion = new GridPosition(cursorPosition.x, cursorPosition.y, cursorPosition.elevation);
+                    if (back)
+                    {
+                        playerUnitUIPanel.SetActive(false);
+                        enemyUnitUIPanel.SetActive(false);
+                        panelUIActive = false;
+                        selectedObject = null;
+                    }
+                }
+                else if (turningUnit)
+                {
                     if (vertical > 0)
                     {
-                        cursorPosition.x++;
+                        unitBeingPlaced.GetComponent<UnitController>().facing = Facing.Left;
                     }
                     if (vertical < 0)
                     {
-                        cursorPosition.x--;
+                        unitBeingPlaced.GetComponent<UnitController>().facing = Facing.Right;
                     }
                     if (horizontal > 0)
                     {
-                        cursorPosition.y--;
+                        unitBeingPlaced.GetComponent<UnitController>().facing = Facing.Back;
                     }
                     if (horizontal < 0)
                     {
-                        cursorPosition.y++;
+                        unitBeingPlaced.GetComponent<UnitController>().facing = Facing.Forward;
                     }
-
-                    if (cursorPosition.y < 0)
-                    {
-                        cursorPosition.y = 0;
-                    }
-                    if (cursorPosition.x < 0)
-                    {
-                        cursorPosition.x = 0;
-                    }
-                    if (cursorPosition.y > maxCursorYPos)
-                    {
-                        cursorPosition.y = maxCursorYPos;
-                    }
-                    if (cursorPosition.x > maxCursorXPos)
-                    {
-                        cursorPosition.x = maxCursorXPos;
-                    }
-                    cursor.GetComponent<CursorController>().position = cursorPosition;
-
-                    nextCursorMoveAllowed = Time.time + cursorDelay;
-                    
-                }
-                
-                if (selectedObject == null)
-                {
                     if (enter)
                     {
-                        Debug.Log("enter");
-                        GameObject obj = gameController.getObjectAtPosition(cursor.GetComponent<CursorController>().position);
-                        if (obj != null)
-                        {
-                            selectObject(obj);
-
-                        }
-                    } else if (back)
-                    {
-                        cursor.GetComponent<CursorController>().position = unitsOriginalPosition;
+                        gameController.moveUnit(cursor.GetComponent<CursorController>().position);
+                        unitBeingPlaced.GetComponent<UnitController>().isBeingPlacing = false;
+                        selectedObject = null;
+                        gameController.selectedObject = null;
+                        panelUIActive = false;
+                        selectedObject = null;
+                        unitBeingPlaced = null;
+                        unitTakingAction = false;
+                        playerUnitUIPanel.SetActive(false);
+                        gameController.endCurrentTurn();
                     }
                 }
-                else if (unitTakingAction && back)
+                else
                 {
-                    back = false;
-                    unitTakingAction = false;
-                    gameController.destroyMovesDisplay();
-                    gameController.selectedObject = null;
-                    cursor.GetComponent<CursorController>().position = selectedObject.GetComponent<UnitController>().position;
-                    playerUnitUIPanel.SetActive(true);
-                    panelUIActive = true;
-                }
-                else if (unitTakingAction && enter)
-                {
-                    if (gameController.possibleTargets.Contains(cursor.GetComponent<CursorController>().position))
+                    //resonsible for moving cursor when nothing is selected
+                    if (!(Time.time < nextCursorMoveAllowed))
                     {
-                        unitTakingAction = false;
-                        if (gameController.activeAction is Move) {
-                            ((Move)gameController.activeAction).destination = cursor.GetComponent<CursorController>().position;
-                            gameController.activeAction.act();
-                            selectedObject = null;
-                            gameController.selectedObject = null;
+                        GridPosition cursorPosition = cursor.GetComponent<CursorController>().position;
+                        GridPosition startPostion = new GridPosition(cursorPosition.x, cursorPosition.y, cursorPosition.elevation);
+                        if (vertical > 0)
+                        {
+                            cursorPosition.x++;
                         }
-                        //unitBeingPlaced = selectedObject;
-                        //unitBeingPlaced.transform.position = IsometricHelper.gridToGamePostion(cursor.GetComponent<CursorController>().position) +
-                        //    unitBeingPlaced.GetComponent<UnitController>().spriteOffset;
-                        //unitBeingPlaced.GetComponent<UnitController>().isBeingPlacing = true;
+                        if (vertical < 0)
+                        {
+                            cursorPosition.x--;
+                        }
+                        if (horizontal > 0)
+                        {
+                            cursorPosition.y--;
+                        }
+                        if (horizontal < 0)
+                        {
+                            cursorPosition.y++;
+                        }
+
+                        if (cursorPosition.y < 0)
+                        {
+                            cursorPosition.y = 0;
+                        }
+                        if (cursorPosition.x < 0)
+                        {
+                            cursorPosition.x = 0;
+                        }
+                        if (cursorPosition.y > maxCursorYPos)
+                        {
+                            cursorPosition.y = maxCursorYPos;
+                        }
+                        if (cursorPosition.x > maxCursorXPos)
+                        {
+                            cursorPosition.x = maxCursorXPos;
+                        }
+                        cursor.GetComponent<CursorController>().position = cursorPosition;
+
+                        nextCursorMoveAllowed = Time.time + cursorDelay;
+
+                    }
+
+                    if (selectedObject == null)
+                    {
+                        if (enter)
+                        {
+                            Debug.Log("enter");
+                            GameObject obj = gameController.getObjectAtPosition(cursor.GetComponent<CursorController>().position);
+                            if (obj != null)
+                            {
+                                selectObject(obj);
+
+                            }
+                        }
+                        else if (back)
+                        {
+                            cursor.GetComponent<CursorController>().position = unitsOriginalPosition;
+                        }
+                    }
+                    else if (unitTakingAction && back)
+                    {
+                        back = false;
+                        unitTakingAction = false;
+                        gameController.destroyMovesDisplay();
+                        gameController.selectedObject = null;
+                        cursor.GetComponent<CursorController>().position = selectedObject.GetComponent<UnitController>().position;
+                        playerUnitUIPanel.SetActive(true);
+                        panelUIActive = true;
+                    }
+                    else if (unitTakingAction && enter)
+                    {
+                        if (gameController.possibleTargets.Contains(cursor.GetComponent<CursorController>().position))
+                        {
+                            unitTakingAction = false;
+                            if (gameController.activeAction is Move)
+                            {
+                                ((Move)gameController.activeAction).destination = cursor.GetComponent<CursorController>().position;
+                                gameController.activeAction.act();
+                                selectedObject = null;
+                                gameController.selectedObject = null;
+                            }
+                            //TODO add in the other Action Types
+                        }
                     }
                 }
             }

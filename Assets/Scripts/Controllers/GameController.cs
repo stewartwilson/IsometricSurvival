@@ -56,24 +56,31 @@ public class GameController : MonoBehaviour
     public EnemySet enemySet;
     //Prefabs for all possible enemy types
     public List<GameObject> enemyPrefabs;
+    //Hold the tavern object
+    public GameObject tavern;
 
     // Use this for initialization
     void Awake()
     {
-        persistence = GameObject.Find("Load Game Controller");
-        if (persistence != null && persistence.GetComponent<LoadGameController>().saveData != null 
-            && persistence.GetComponent<LoadGameController>().saveData.currentRound != 0)
+        if(GameObject.Find("Load Game Controller") == null)
         {
-            loadFromController();
-        } else
-        {
-            currentRound = 1;
-            powerUps = new List<PowerUp>();
+            SceneManager.LoadScene("Persistence", LoadSceneMode.Additive);
         }
     }
 
     private void Start()
     {
+        persistence = GameObject.Find("Load Game Controller");
+        if (persistence != null && persistence.GetComponent<LoadGameController>().saveData != null
+            && persistence.GetComponent<LoadGameController>().saveData.currentRound != 0)
+        {
+            loadFromController();
+        }
+        else
+        {
+            currentRound = 1;
+            powerUps = new List<PowerUp>();
+        }
         SceneManager.SetActiveScene(SceneManager.GetSceneByName("Main Game"));
         switchTurn = false;
         turnCounter = 0;

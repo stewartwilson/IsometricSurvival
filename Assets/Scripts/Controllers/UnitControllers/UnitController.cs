@@ -19,6 +19,12 @@ public class UnitController : MonoBehaviour {
     public Vector2 spriteOffset;
     public ActionSet actionSet;
     public bool isBeingPlacing;
+    public bool inGame;
+
+    protected void Awake()
+    {
+        inGame = false;
+    }
 
     protected void Start()
     {
