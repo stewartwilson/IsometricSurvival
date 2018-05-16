@@ -8,6 +8,7 @@ public class Action
     public GameObject target;
     public int range;
     public bool canTargetSelf;
+    public bool canTargetUnit;
 
     public virtual void act()
     {

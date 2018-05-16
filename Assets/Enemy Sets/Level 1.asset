@@ -14,8 +14,8 @@ MonoBehaviour:
   enemies:
   - enemyType: 0
     position:
-      x: 2
-      y: 0
+      x: 6
+      y: 6
       elevation: 0
   - enemyType: 0
     position:

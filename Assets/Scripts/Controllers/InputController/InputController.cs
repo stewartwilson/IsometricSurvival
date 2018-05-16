@@ -46,6 +46,7 @@ public class InputController : MonoBehaviour
         float horizontal = Input.GetAxis("Horizontal");
         bool enter = Input.GetButtonDown("Submit");
         bool back = Input.GetButtonDown("Back");
+        //Start of game unit placing controls
         if (gameController.tavern.GetComponent<Tavern>().placingUnits)
         {
             Tavern tavern = gameController.tavern.GetComponent<Tavern>();
@@ -151,6 +152,7 @@ public class InputController : MonoBehaviour
                 gameController.tavern.GetComponent<Tavern>().placingUnits = false;
             }
         }
+        //Ingame movement controls
         else
         {
             if (inspectingUnit)
@@ -293,6 +295,25 @@ public class InputController : MonoBehaviour
                                 selectedObject = null;
                                 gameController.selectedObject = null;
                             }
+                            if (gameController.activeAction is Shoot)
+                            {
+                                GameObject unit = gameController.getObjectAtPosition(cursor.GetComponent<CursorController>().position);
+                                if (unit != null && unit.GetComponent<UnitController>() != null)
+                                {
+                                    ((Shoot)gameController.activeAction).target = unit;
+                                    gameController.activeAction.act();
+                                    selectedObject = null;
+                                    gameController.selectedObject = null;
+                                }
+                            }
+                            if (gameController.activeAction is Trap)
+                            {
+                                ((Move)gameController.activeAction).destination = cursor.GetComponent<CursorController>().position;
+                                gameController.activeAction.act();
+                                selectedObject = null;
+                                gameController.selectedObject = null;
+                            }
+
                             //TODO add in the other Action Types
                         }
                     }

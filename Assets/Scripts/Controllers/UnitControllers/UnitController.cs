@@ -7,6 +7,7 @@ public class UnitController : MonoBehaviour {
     public bool isPlayerUnit;
     public bool isSelected;
     public bool isDefeated;
+    public int maxHealth;
     public int health;
     public int speed;
     public Facing facing;
@@ -31,6 +32,7 @@ public class UnitController : MonoBehaviour {
         animator = GetComponent<Animator>();
         isBeingPlacing = false;
         initiateUnitChacteristics();
+        health = maxHealth;
     }
 
     protected virtual void initiateUnitChacteristics()
@@ -68,6 +70,20 @@ public class UnitController : MonoBehaviour {
         doUpdateTasks();
     }
 
+    public void takeDamage(int damage)
+    {
+        health -= damage;
+    }
+
+    public void takeHealing(int healing)
+    {
+        health += healing;
+        if(health > maxHealth)
+        {
+            health = maxHealth;
+        }
+    }
+
     protected virtual void doUpdateTasks()
     {
 
@@ -97,4 +113,5 @@ public class UnitController : MonoBehaviour {
         actionSet.actions[3].hasBeenDone = true;
         return actionSet.actions[3].action;
     }
+
 }

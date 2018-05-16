@@ -5,7 +5,6 @@ using System.Text;
 
 public class Melee : Action
 {
-    public int range;
     public int damage;
 
     public Melee()

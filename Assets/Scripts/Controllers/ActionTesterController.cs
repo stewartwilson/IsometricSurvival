@@ -4,7 +4,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class GameController : MonoBehaviour
+public class ActionTesterController : MonoBehaviour
 {
     //Holds the cursor object used for controlling the game
     public GameObject cursor;
@@ -119,7 +119,6 @@ public class GameController : MonoBehaviour
             if (displayingActionTargets)
             {
                 destroyTargetsDisplay();
-                displayingActionTargets = false;
             }
         }
         if(checkForPlayerLoss())
@@ -162,7 +161,12 @@ public class GameController : MonoBehaviour
         foreach (GridPosition pos in targets)
         {
             count++;
-            GameObject go = (GameObject)Instantiate(Resources.Load("Possible Move"));
+            GameObject go = null;
+            GameObject unit = getObjectAtPosition(pos);
+            if (unit == null)
+            {
+                go = (GameObject)Instantiate(Resources.Load("Possible Move"));
+            }
             go.transform.SetParent(targetsContainer.transform);
             go.transform.position = IsometricHelper.gridToGamePostion(pos);
             go.GetComponent<SpriteRenderer>().sortingOrder = IsometricHelper.getTileSortingOrder(pos);
@@ -220,22 +224,15 @@ public class GameController : MonoBehaviour
 
     public List<GridPosition> getPossibleActionTargets(GridPosition currentPos, Action action)
     {
+        Debug.Log(currentPos + ", " + action);
         List<GridPosition> possibleTargets = new List<GridPosition>();
         foreach (WalkableArea wa in levelController.walkableArea)
         {
             //TODO account for elevation difference
-            if (IsometricHelper.distanceBetweenGridPositions(wa.position, currentPos) <= action.range)
+            if (IsometricHelper.distanceBetweenGridPositions(wa.position, currentPos) <= action.range &&
+                getObjectAtPosition(wa.position) == null)
             {
-                if (getObjectAtPosition(wa.position) == null)
-                {
-                    possibleTargets.Add(wa.position);
-                } else if(wa.position.Equals(currentPos) && action.canTargetSelf)
-                {
-                    possibleTargets.Add(wa.position);
-                } else if(!wa.position.Equals(currentPos) && action.canTargetUnit)
-                {
-                    possibleTargets.Add(wa.position);
-                }
+                possibleTargets.Add(wa.position);
             }
         }
 

@@ -10,6 +10,8 @@ public class Move : Action
     public Move()
     {
         range = 3;
+        canTargetSelf = true;
+        canTargetUnit = false;
         actionName = "Move";
     }
 
