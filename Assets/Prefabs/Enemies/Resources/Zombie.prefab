@@ -111,7 +111,7 @@ MonoBehaviour:
     y: 0
     elevation: 0
   currentPath: []
-  maxMovement: 1
+  maxMovement: 2
   spriteOffset: {x: 0, y: 0.4}
   actionSet:
     actions: []

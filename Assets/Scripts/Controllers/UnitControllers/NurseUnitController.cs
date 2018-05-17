@@ -18,9 +18,9 @@ public class NurseUnitController : PlayerUnitController
     protected override void initiateUnitChacteristics()
     {
         base.initiateUnitChacteristics();
-        Heal heal = new Heal();
         Hit hit = new Hit();
-        actionSet.actions.Add(new ActionMap(heal, false));
+        Heal heal = new Heal();
+        actionSet.actions.Add(new ActionMap(hit, false));
         actionSet.actions.Add(new ActionMap(heal, false));
         foreach (ActionMap actionMap in actionSet.actions)
         {

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameController : MonoBehaviour
 {
@@ -58,6 +59,10 @@ public class GameController : MonoBehaviour
     public List<GameObject> enemyPrefabs;
     //Hold the tavern object
     public GameObject tavern;
+    //unit action 1 button
+    public Button actionButton1;
+    //unit action 2 button
+    public Button actionButton2;
 
     // Use this for initialization
     void Awake()
@@ -89,7 +94,10 @@ public class GameController : MonoBehaviour
         initTurnOrder();
         displayingMoves = false;
         activeUnit = turnOrder[0];
-
+        if (activeUnit.tag.Equals("Player Unit")) {
+            actionButton1.GetComponentInChildren<Text>().text = activeUnit.GetComponent<UnitController>().actionSet.actions[2].action.actionName;
+            actionButton2.GetComponentInChildren<Text>().text = activeUnit.GetComponent<UnitController>().actionSet.actions[3].action.actionName;
+        }
 
     }
 
@@ -101,6 +109,11 @@ public class GameController : MonoBehaviour
             activeUnit = turnOrder[turnCounter];
             cursor.GetComponent<CursorController>().position = activeUnit.GetComponent<UnitController>().position;
             switchTurn = false;
+            if (activeUnit.tag.Equals("Player Unit"))
+            {
+                actionButton1.GetComponentInChildren<Text>().text = activeUnit.GetComponent<UnitController>().actionSet.actions[2].action.actionName;
+                actionButton2.GetComponentInChildren<Text>().text = activeUnit.GetComponent<UnitController>().actionSet.actions[3].action.actionName;
+            }
             if (!activeUnit.activeSelf)
             {
                 endCurrentTurn();

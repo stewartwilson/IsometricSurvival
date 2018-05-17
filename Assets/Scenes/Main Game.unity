@@ -9072,6 +9072,8 @@ MonoBehaviour:
   enemySet: {fileID: 11400000, guid: 236db5e1214a5aa4a84c3b6f06ff84b3, type: 2}
   enemyPrefabs: []
   tavern: {fileID: 65192636}
+  actionButton1: {fileID: 1117021578}
+  actionButton2: {fileID: 1158166043}
 --- !u!4 &286049449
 Transform:
   m_ObjectHideFlags: 0

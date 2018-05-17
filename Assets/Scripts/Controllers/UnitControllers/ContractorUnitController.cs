@@ -15,4 +15,17 @@ public class ContractorUnitController : PlayerUnitController
         return base.doAction2();
     }
 
+    protected override void initiateUnitChacteristics()
+    {
+        base.initiateUnitChacteristics();
+        Hit hit = new Hit();
+        Build build = new Build();
+        actionSet.actions.Add(new ActionMap(hit, false));
+        actionSet.actions.Add(new ActionMap(build, false));
+        foreach (ActionMap actionMap in actionSet.actions)
+        {
+            actionMap.action.actor = gameObject;
+        }
+    }
+
 }
