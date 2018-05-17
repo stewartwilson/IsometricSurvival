@@ -14,7 +14,10 @@ public class Tavern : MonoBehaviour {
 	void Start () {
 		foreach(Transform spawn in transform)
         {
-            spawnPoints.Add(spawn.GetComponent<PlayerSpawnPoint>().position);
+            if (spawn.gameObject.tag.Equals("Spawn Point"))
+            {
+                spawnPoints.Add(spawn.GetComponent<PlayerSpawnPoint>().position);
+            }
         }
 	}
 	
@@ -24,7 +27,10 @@ public class Tavern : MonoBehaviour {
         {
             foreach (Transform spawn in transform)
             {
-                spawn.gameObject.SetActive(false);
+                if (spawn.gameObject.tag.Equals("Spawn Point"))
+                {
+                    spawn.gameObject.SetActive(false);
+                }
             }
         }
 	}

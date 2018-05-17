@@ -8,6 +8,9 @@ TagManager:
   - Enemy Unit
   - Player Unit
   - Level
+  - Building
+  - Shadow Area
+  - Spawn Point
   layers:
   - Default
   - TransparentFX
@@ -51,9 +54,15 @@ TagManager:
   - name: Cursor
     uniqueID: 108801987
     locked: 0
-  - name: Unit
-    uniqueID: 1000815091
+  - name: Shadow
+    uniqueID: 3049512171
     locked: 0
   - name: Environment
     uniqueID: 3390792127
+    locked: 0
+  - name: Building
+    uniqueID: 2476142119
+    locked: 0
+  - name: Unit
+    uniqueID: 1000815091
     locked: 0

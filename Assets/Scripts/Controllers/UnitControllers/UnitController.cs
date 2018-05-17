@@ -50,23 +50,6 @@ public class UnitController : MonoBehaviour {
 
     public void Update()
     {
-        bool isUnitBehind = false;
-        foreach (Transform child in GameObject.Find("Behind Environment").transform)
-        {
-            if (position.Equals(child.GetComponent<WalkableArea>().position))
-            {
-                isUnitBehind = true;
-            }
-        }
-        behindEnvironmentObject = isUnitBehind;
-        if(behindEnvironmentObject)
-        {
-            GetComponent<SpriteRenderer>().color = new Color32(0x00, 0x00, 0x00, 0xAA);
-        } else
-        {
-            GetComponent<SpriteRenderer>().color = new Color32(0xFF, 0xFF, 0xFF, 0xFF);
-        }
-        
         doUpdateTasks();
     }
 
