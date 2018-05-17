@@ -17,12 +17,9 @@ public class HunterUnitController : PlayerUnitController
 
     protected override void initiateUnitChacteristics()
     {
-        Move move = new Move();
+        base.initiateUnitChacteristics();
         Shoot shoot = new Shoot();
         Trap trap = new Trap();
-        Wait wait = new Wait();
-        actionSet.actions.Add(new ActionMap(move, false));
-        actionSet.actions.Add(new ActionMap(wait, false));
         actionSet.actions.Add(new ActionMap(shoot, false));
         actionSet.actions.Add(new ActionMap(trap, false));
         foreach (ActionMap actionMap in actionSet.actions)

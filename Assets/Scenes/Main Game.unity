@@ -2028,6 +2028,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8a2eb93a334421459c42261e8730b82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  position:
+    x: 9
+    y: 10
+    elevation: 0
+  shadow: {fileID: 896406959}
+  width: 3
+  height: 3
   spawnPoints: []
   placingUnits: 0
 --- !u!212 &65192639
@@ -2062,9 +2069,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -1818825177
-  m_SortingLayer: 5
-  m_SortingOrder: 1
+  m_SortingLayerID: 1000815091
+  m_SortingLayer: 6
+  m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 748b7ca6f7331af49b0fc17f210fb555, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -5436,11 +5443,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4030196224969480, guid: 13299e1948a17ea49a881e59eb34d762, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -0.932
+      value: -0.422
       objectReference: {fileID: 0}
     - target: {fileID: 4030196224969480, guid: 13299e1948a17ea49a881e59eb34d762, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 5.396
+      value: 5.744
       objectReference: {fileID: 0}
     - target: {fileID: 4030196224969480, guid: 13299e1948a17ea49a881e59eb34d762, type: 2}
       propertyPath: m_LocalPosition.z
@@ -5523,12 +5530,12 @@ Prefab:
     - target: {fileID: 212522021221059486, guid: 13299e1948a17ea49a881e59eb34d762,
         type: 2}
       propertyPath: m_SortingLayerID
-      value: -1818825177
+      value: 1000815091
       objectReference: {fileID: 0}
     - target: {fileID: 212522021221059486, guid: 13299e1948a17ea49a881e59eb34d762,
         type: 2}
       propertyPath: m_SortingLayer
-      value: 5
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 212522021221059486, guid: 13299e1948a17ea49a881e59eb34d762,
         type: 2}
@@ -30194,9 +30201,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -1818825177
-  m_SortingLayer: 5
-  m_SortingOrder: 0
+  m_SortingLayerID: 1000815091
+  m_SortingLayer: 6
+  m_SortingOrder: -2
   m_Sprite: {fileID: 21300000, guid: 748b7ca6f7331af49b0fc17f210fb555, type: 3}
   m_Color: {r: 0.4339623, g: 0.4339623, b: 0.4339623, a: 0.46666667}
   m_FlipX: 0
@@ -35830,6 +35837,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   actionObjectParent: {fileID: 1440340446}
   trapPrefab: {fileID: 1639782254736372, guid: 5bef95f3fc344b44f8f05ea8892e44da, type: 2}
+  wallPrefab: {fileID: 1058026526766424, guid: dac7dc323aadc0b4d898ca41e388c248, type: 2}
 --- !u!4 &1096112201
 Transform:
   m_ObjectHideFlags: 0

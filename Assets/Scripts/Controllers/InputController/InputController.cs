@@ -283,6 +283,7 @@ public class InputController : MonoBehaviour
                             }
                             if (gameController.activeAction is Wait)
                             {
+                                ((Wait)gameController.activeAction).facing = selectedObject.GetComponent<UnitController>().facing;
                                 gameController.activeAction.act();
                                 selectedObject = null;
                                 gameController.selectedObject = null;
@@ -310,6 +311,7 @@ public class InputController : MonoBehaviour
                         {
                             selectedObject.GetComponent<UnitController>().facing = Facing.Forward;
                         }
+                        
                         /*if(enter)
                         {
                             gameController.activeAction.act();

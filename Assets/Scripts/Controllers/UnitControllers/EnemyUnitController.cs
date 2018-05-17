@@ -4,10 +4,13 @@ using UnityEngine;
 
 public class EnemyUnitController : UnitController {
 
+    public List<GridPosition> possibleMoves;
+    public bool isActing;
+
     protected override void doUpdateTasks()
     {
         base.doUpdateTasks();
-        animator.SetInteger("Facing", (int)facing);
+        //animator.SetInteger("Facing", (int)facing);
         checkIfDefeated();
         if (!isBeingPlacing)
         {
@@ -15,8 +18,12 @@ public class EnemyUnitController : UnitController {
         }
     }
 
-    public void takeTurn()
+    public virtual void takeTurn()
     {
-        
+        isActing = true;
+        turnsTaken++;
+        Debug.Log(gameObject.name + " taking turn number " + turnsTaken);
+
     }
+
 }

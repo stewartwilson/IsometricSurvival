@@ -22,6 +22,10 @@ public class UnitController : MonoBehaviour {
     public bool isBeingPlacing;
     public bool inGame;
 
+    protected bool hasMoved;
+    protected bool hasActed;
+    protected int turnsTaken;
+
     protected void Awake()
     {
         inGame = false;
@@ -33,11 +37,18 @@ public class UnitController : MonoBehaviour {
         isBeingPlacing = false;
         initiateUnitChacteristics();
         health = maxHealth;
+        hasMoved = false;
+        hasActed = false;
+        turnsTaken = 0;
     }
 
     protected virtual void initiateUnitChacteristics()
     {
-        
+        Move move = new Move();
+        move.range = maxMovement;
+        Wait wait = new Wait();
+        actionSet.actions.Add(new ActionMap(move, false));
+        actionSet.actions.Add(new ActionMap(wait, false));
     }
 
     protected void checkIfDefeated()
@@ -69,7 +80,7 @@ public class UnitController : MonoBehaviour {
 
     protected virtual void doUpdateTasks()
     {
-
+        GetComponent<SpriteRenderer>().sortingOrder = IsometricHelper.getTileSortingOrder(position);
     }
 
     public virtual Action doMoveAction()

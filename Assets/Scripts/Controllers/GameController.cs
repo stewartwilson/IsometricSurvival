@@ -109,7 +109,13 @@ public class GameController : MonoBehaviour
         }
         if((activeUnit != null) && "Enemy Unit".Equals(activeUnit.tag))
         {
-            activeUnit.GetComponent<EnemyUnitController>().takeTurn();
+            EnemyUnitController enemy = activeUnit.GetComponent<EnemyUnitController>();
+            if (!enemy.isActing)
+            {
+                enemy.possibleMoves = getPossibleMovement(enemy.position, enemy.maxMovement);
+                activeUnit.GetComponent<EnemyUnitController>().takeTurn();
+            }
+
         }
         if (selectedObject != null && !displayingActionTargets)
         {
@@ -214,7 +220,7 @@ public class GameController : MonoBehaviour
         {
             //TODO account for elevation difference
             if (IsometricHelper.distanceBetweenGridPositions(wa.position, currentPos) <= maxMovement &&
-                getObjectAtPosition(wa.position) == null)
+                (getObjectAtPosition(wa.position) == null || wa.position.Equals(currentPos)))
             {
                 possibleMoves.Add(wa.position);
             }

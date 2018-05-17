@@ -52,6 +52,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dd9701555c676a4e9a4f8354844d0ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  health: 5
+  position:
+    x: 0
+    y: 0
+    elevation: 0
+  spriteOffset: {x: 0, y: 0}
 --- !u!212 &212289950259851756
 SpriteRenderer:
   m_ObjectHideFlags: 1

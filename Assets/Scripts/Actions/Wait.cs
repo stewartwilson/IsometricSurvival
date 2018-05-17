@@ -20,5 +20,10 @@ public class Wait : Action
         base.act();
         actor.GetComponent<UnitController>().facing = facing;
     }
+
+    public override string ToString()
+    {
+        return actionName + ", actor:" + actor.name + ", postion:" + actor.GetComponent<UnitController>().position + ", facing:" + facing;
+    }
 }
 

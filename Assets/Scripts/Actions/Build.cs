@@ -27,4 +27,3 @@ public class Build : Action
         return actionName + ", actor:" + actor.name + ", postion:" + actor.GetComponent<UnitController>().position + ", target:" + destination;
     }
 }
-
