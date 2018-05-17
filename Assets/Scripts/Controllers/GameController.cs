@@ -101,6 +101,11 @@ public class GameController : MonoBehaviour
             activeUnit = turnOrder[turnCounter];
             cursor.GetComponent<CursorController>().position = activeUnit.GetComponent<UnitController>().position;
             switchTurn = false;
+            if (!activeUnit.activeSelf)
+            {
+                endCurrentTurn();
+                switchTurn = true;
+            }
         }
         if((activeUnit != null) && "Enemy Unit".Equals(activeUnit.tag))
         {

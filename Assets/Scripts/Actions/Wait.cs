@@ -10,6 +10,8 @@ public class Wait : Action
     public Wait()
     {
         range = 0;
+        canTargetSelf = true;
+        canTargetUnit = false;
         actionName = "Wait";
     }
 

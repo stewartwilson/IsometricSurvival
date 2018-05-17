@@ -178,42 +178,10 @@ public class InputController : MonoBehaviour
                         selectedObject = null;
                     }
                 }
-                else if (turningUnit)
-                {
-                    if (vertical > 0)
-                    {
-                        unitBeingPlaced.GetComponent<UnitController>().facing = Facing.Left;
-                    }
-                    if (vertical < 0)
-                    {
-                        unitBeingPlaced.GetComponent<UnitController>().facing = Facing.Right;
-                    }
-                    if (horizontal > 0)
-                    {
-                        unitBeingPlaced.GetComponent<UnitController>().facing = Facing.Back;
-                    }
-                    if (horizontal < 0)
-                    {
-                        unitBeingPlaced.GetComponent<UnitController>().facing = Facing.Forward;
-                    }
-                    if (enter)
-                    {
-                        gameController.moveUnit(cursor.GetComponent<CursorController>().position);
-                        unitBeingPlaced.GetComponent<UnitController>().isBeingPlacing = false;
-                        selectedObject = null;
-                        gameController.selectedObject = null;
-                        panelUIActive = false;
-                        selectedObject = null;
-                        unitBeingPlaced = null;
-                        unitTakingAction = false;
-                        playerUnitUIPanel.SetActive(false);
-                        gameController.endCurrentTurn();
-                    }
-                }
                 else
                 {
                     //resonsible for moving cursor when nothing is selected
-                    if (!(Time.time < nextCursorMoveAllowed))
+                    if (!(Time.time < nextCursorMoveAllowed) && !(gameController.activeAction is Wait))
                     {
                         GridPosition cursorPosition = cursor.GetComponent<CursorController>().position;
                         GridPosition startPostion = new GridPosition(cursorPosition.x, cursorPosition.y, cursorPosition.elevation);
@@ -313,9 +281,42 @@ public class InputController : MonoBehaviour
                                 selectedObject = null;
                                 gameController.selectedObject = null;
                             }
+                            if (gameController.activeAction is Wait)
+                            {
+                                gameController.activeAction.act();
+                                selectedObject = null;
+                                gameController.selectedObject = null;
+                                gameController.endCurrentTurn();
+                            }
 
                             //TODO add in the other Action Types
                         }
+                    }
+                    else if (gameController.activeAction is Wait)
+                    {
+                        if (vertical > 0)
+                        {
+                            selectedObject.GetComponent<UnitController>().facing = Facing.Left;
+                        }
+                        if (vertical < 0)
+                        {
+                            selectedObject.GetComponent<UnitController>().facing = Facing.Right;
+                        }
+                        if (horizontal > 0)
+                        {
+                            selectedObject.GetComponent<UnitController>().facing = Facing.Back;
+                        }
+                        if (horizontal < 0)
+                        {
+                            selectedObject.GetComponent<UnitController>().facing = Facing.Forward;
+                        }
+                        /*if(enter)
+                        {
+                            gameController.activeAction.act();
+                            selectedObject = null;
+                            gameController.selectedObject = null;
+                            gameController.endCurrentTurn();
+                        }*/
                     }
                 }
             }
@@ -382,9 +383,10 @@ public class InputController : MonoBehaviour
     {
         if ("Player Unit".Equals(selectedObject.tag))
         {
-            Debug.Log("End Turn");
             unitTakingAction = true;
-            turningUnit = true;
+            gameController.selectedObject = selectedObject;
+            playerUnitUIPanel.SetActive(false);
+            panelUIActive = false;
             gameController.activeAction = selectedObject.GetComponent<UnitController>().doWaitAction();
            
         }
