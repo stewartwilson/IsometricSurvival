@@ -122,17 +122,14 @@ public class BasicZombieUnitController : EnemyUnitController
         GameObject closest = null;
         if (playerUnits != null)
         {
-            Debug.Log("Found playerUnits");
             int closestDistance = 99;
             foreach (Transform unit in playerUnits.transform)
             {
-                Debug.Log("Looping through children");
                 //TODO account for environment targets
                 if (unit.gameObject.tag.Equals("Player Unit"))
                 {
                     if (unit.gameObject.activeSelf)
                     {
-                        Debug.Log(unit.gameObject.name);
                         if (closestTarget == null)
                         {
                             closest = unit.gameObject;

@@ -10,6 +10,7 @@ public class Tavern : MonoBehaviour
     public int height;
     public List<GridPosition> spawnPoints;
     public bool placingUnits;
+    public int health;
     void Awake()
     {
         placingUnits = true;

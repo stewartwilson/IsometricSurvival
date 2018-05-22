@@ -19,13 +19,36 @@ public class Hook : Action
     public override void act()
     {
         base.act();
-        //TODO Implement moving target towards actor
+        moveTargetTowardsActor();
         target.GetComponent<UnitController>().takeDamage(damage);
+
     }
 
     public override string ToString()
     {
         return actionName + ", actor:" + actor.name + ", postion:" + actor.GetComponent<UnitController>().position + ", target:" + target.GetComponent<UnitController>().position;
+    }
+
+    private void moveTargetTowardsActor()
+    {
+        GridPosition targetPositon = target.GetComponent<UnitController>().position;
+        GridPosition actorPosition = actor.GetComponent<UnitController>().position;
+        GridPosition targetNewPostion = targetPositon;
+        if (targetPositon.x > actorPosition.x)
+        {
+            targetNewPostion = new GridPosition(actorPosition.x+1, actorPosition.y);
+        } else if (targetPositon.x < actorPosition.x)
+        {
+            targetNewPostion = new GridPosition(actorPosition.x - 1, actorPosition.y);
+        }
+        else if (targetPositon.y < actorPosition.y)
+        {
+            targetNewPostion = new GridPosition(actorPosition.x, actorPosition.y - 1);
+        } else if (targetPositon.y > actorPosition.y)
+        {
+            targetNewPostion = new GridPosition(actorPosition.x, actorPosition.y + 1);
+        }
+        target.GetComponent<UnitController>().position = targetNewPostion;
     }
 }
 

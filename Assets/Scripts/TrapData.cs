@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TrapData : MonoBehaviour {
+public class TrapData : MonoBehaviour
+{
     public int damage;
     public GridPosition position;
     public Vector2 spriteOffset;
@@ -10,6 +11,6 @@ public class TrapData : MonoBehaviour {
     void Update()
     {
         transform.position = IsometricHelper.gridToGamePostion(position) + spriteOffset;
-        
+
     }
 }

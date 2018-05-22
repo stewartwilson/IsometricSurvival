@@ -22,9 +22,9 @@ public class ActionPrefabHelper : MonoBehaviour
 
     public void initWall(Build wall)
     {
-        trapPrefab.GetComponent<WallData>().position = wall.destination;
-        GameObject trapObject = Instantiate(trapPrefab, IsometricHelper.gridToGamePostion(wall.destination), Quaternion.identity);
-        trapObject.transform.SetParent(actionObjectParent.transform);
+        wallPrefab.GetComponent<WallData>().position = wall.destination;
+        GameObject wallObject = Instantiate(wallPrefab, IsometricHelper.gridToGamePostion(wall.destination), Quaternion.identity);
+        wallObject.transform.SetParent(actionObjectParent.transform);
 
 
     }

@@ -94,31 +94,29 @@ public class GameController : MonoBehaviour
         initTurnOrder();
         displayingMoves = false;
         activeUnit = turnOrder[0];
-        if (activeUnit.tag.Equals("Player Unit")) {
-            actionButton1.GetComponentInChildren<Text>().text = activeUnit.GetComponent<UnitController>().actionSet.actions[2].action.actionName;
-            actionButton2.GetComponentInChildren<Text>().text = activeUnit.GetComponent<UnitController>().actionSet.actions[3].action.actionName;
-        }
+        
 
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(switchTurn)
+        activeUnit = turnOrder[turnCounter];
+        if (activeUnit.tag.Equals("Player Unit"))
         {
-            activeUnit = turnOrder[turnCounter];
+            actionButton1.GetComponentInChildren<Text>().text = activeUnit.GetComponent<UnitController>().actionSet.actions[2].action.actionName;
+            actionButton2.GetComponentInChildren<Text>().text = activeUnit.GetComponent<UnitController>().actionSet.actions[3].action.actionName;
+        }
+        if (switchTurn)
+        {
             cursor.GetComponent<CursorController>().position = activeUnit.GetComponent<UnitController>().position;
             switchTurn = false;
-            if (activeUnit.tag.Equals("Player Unit"))
-            {
-                actionButton1.GetComponentInChildren<Text>().text = activeUnit.GetComponent<UnitController>().actionSet.actions[2].action.actionName;
-                actionButton2.GetComponentInChildren<Text>().text = activeUnit.GetComponent<UnitController>().actionSet.actions[3].action.actionName;
-            }
             if (!activeUnit.activeSelf)
             {
                 endCurrentTurn();
                 switchTurn = true;
             }
+            
         }
         if((activeUnit != null) && "Enemy Unit".Equals(activeUnit.tag))
         {
@@ -227,7 +225,6 @@ public class GameController : MonoBehaviour
 
     public List<GridPosition> getPossibleMovement(GridPosition currentPos, int maxMovement)
     {
-        Debug.Log(currentPos + ", " + maxMovement);
         List<GridPosition> possibleMoves = new List<GridPosition>();
         foreach (WalkableArea wa in levelController.walkableArea)
         {
@@ -405,5 +402,18 @@ public class GameController : MonoBehaviour
         }
 
         return enemy;
+    }
+
+    public void removeUnactiveUnitsFromTurnOrder()
+    {
+        List<GameObject> tempList = new List<GameObject>();
+        foreach(GameObject unit in turnOrder)
+        {
+            if(unit.activeSelf)
+            {
+                tempList.Add(unit);
+            }
+        }
+        turnOrder = tempList;
     }
 }

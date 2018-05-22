@@ -150,6 +150,8 @@ public class InputController : MonoBehaviour
             if (Input.GetButtonDown("Start"))
             {
                 gameController.tavern.GetComponent<Tavern>().placingUnits = false;
+                gameController.removeUnactiveUnitsFromTurnOrder();
+                gameController.activeUnit = gameController.turnOrder[0];
             }
         }
         //Ingame movement controls
@@ -238,7 +240,7 @@ public class InputController : MonoBehaviour
                         }
                         else if (back)
                         {
-                            cursor.GetComponent<CursorController>().position = unitsOriginalPosition;
+                            cursor.GetComponent<CursorController>().position = gameController.activeUnit.GetComponent<UnitController>().position;
                         }
                     }
                     else if (unitTakingAction && back)
@@ -253,45 +255,8 @@ public class InputController : MonoBehaviour
                     }
                     else if (unitTakingAction && enter)
                     {
-                        if (gameController.possibleTargets.Contains(cursor.GetComponent<CursorController>().position))
-                        {
-                            unitTakingAction = false;
-                            if (gameController.activeAction is Move)
-                            {
-                                ((Move)gameController.activeAction).destination = cursor.GetComponent<CursorController>().position;
-                                gameController.activeAction.act();
-                                selectedObject = null;
-                                gameController.selectedObject = null;
-                            }
-                            if (gameController.activeAction is Shoot)
-                            {
-                                GameObject unit = gameController.getObjectAtPosition(cursor.GetComponent<CursorController>().position);
-                                if (unit != null && unit.GetComponent<UnitController>() != null)
-                                {
-                                    ((Shoot)gameController.activeAction).target = unit;
-                                    gameController.activeAction.act();
-                                    selectedObject = null;
-                                    gameController.selectedObject = null;
-                                }
-                            }
-                            if (gameController.activeAction is Trap)
-                            {
-                                ((Trap)gameController.activeAction).destination = cursor.GetComponent<CursorController>().position;
-                                gameController.activeAction.act();
-                                selectedObject = null;
-                                gameController.selectedObject = null;
-                            }
-                            if (gameController.activeAction is Wait)
-                            {
-                                ((Wait)gameController.activeAction).facing = selectedObject.GetComponent<UnitController>().facing;
-                                gameController.activeAction.act();
-                                selectedObject = null;
-                                gameController.selectedObject = null;
-                                gameController.endCurrentTurn();
-                            }
-
-                            //TODO add in the other Action Types
-                        }
+                        processActiveAction();
+                        
                     }
                     else if (gameController.activeAction is Wait)
                     {
@@ -324,6 +289,94 @@ public class InputController : MonoBehaviour
             }
         }
         
+    }
+
+    /**
+     * Processes Unit actions based on the game controllers active action type
+     * 
+     */
+    private void processActiveAction()
+    {
+        if (gameController.possibleTargets.Contains(cursor.GetComponent<CursorController>().position))
+        {
+            unitTakingAction = false;
+            if (gameController.activeAction is Move)
+            {
+                ((Move)gameController.activeAction).destination = cursor.GetComponent<CursorController>().position;
+                gameController.activeAction.act();
+                selectedObject = null;
+                gameController.selectedObject = null;
+            }
+            if (gameController.activeAction is Shoot)
+            {
+                GameObject unit = gameController.getObjectAtPosition(cursor.GetComponent<CursorController>().position);
+                if (unit != null && unit.GetComponent<UnitController>() != null)
+                {
+                    ((Shoot)gameController.activeAction).target = unit;
+                    gameController.activeAction.act();
+                    selectedObject = null;
+                    gameController.selectedObject = null;
+                }
+            }
+            if (gameController.activeAction is Trap)
+            {
+                ((Trap)gameController.activeAction).destination = cursor.GetComponent<CursorController>().position;
+                gameController.activeAction.act();
+                selectedObject = null;
+                gameController.selectedObject = null;
+            }
+            if (gameController.activeAction is Build)
+            {
+                ((Build)gameController.activeAction).destination = cursor.GetComponent<CursorController>().position;
+                gameController.activeAction.act();
+                selectedObject = null;
+                gameController.selectedObject = null;
+            }
+            if (gameController.activeAction is Hook)
+            {
+                GameObject unit = gameController.getObjectAtPosition(cursor.GetComponent<CursorController>().position);
+                if (unit != null && unit.GetComponent<UnitController>() != null)
+                {
+                    ((Hook)gameController.activeAction).target = unit;
+                    gameController.activeAction.act();
+                    selectedObject = null;
+                    gameController.selectedObject = null;
+                }
+            }
+            if (gameController.activeAction is Hit)
+            {
+                GameObject unit = gameController.getObjectAtPosition(cursor.GetComponent<CursorController>().position);
+                if (unit != null && unit.GetComponent<UnitController>() != null)
+                {
+                    ((Hit)gameController.activeAction).target = unit;
+                    gameController.activeAction.act();
+                    selectedObject = null;
+                    gameController.selectedObject = null;
+                }
+            }
+            if (gameController.activeAction is Heal)
+            {
+                GameObject unit = gameController.getObjectAtPosition(cursor.GetComponent<CursorController>().position);
+                if (unit != null && unit.GetComponent<UnitController>() != null)
+                {
+                    ((Heal)gameController.activeAction).target = unit;
+                    gameController.activeAction.act();
+                    selectedObject = null;
+                    gameController.selectedObject = null;
+                }
+            }
+            if (gameController.activeAction is Wait)
+            {
+                ((Wait)gameController.activeAction).facing = selectedObject.GetComponent<UnitController>().facing;
+                gameController.activeAction.act();
+                selectedObject = null;
+                gameController.selectedObject = null;
+                gameController.endCurrentTurn();
+            }
+
+
+            //TODO add in the other Action Types
+        }
     }
 
     /**
@@ -424,31 +477,11 @@ public class InputController : MonoBehaviour
             panelUIActive = true;
             unitsOriginalFacing = selectedObject.GetComponent<UnitController>().facing;
             unitsOriginalPosition = selectedObject.GetComponent<UnitController>().position;
-            Debug.Log("selected Active Unit");
         } else
         {
             enemyUnitUIPanel.SetActive(true);
             panelUIActive = true;
-            Debug.Log("selected non active Unit");
         }
-        /*switch (selectedObject.tag)
-        {
-            case "Player Unit":
-                playerUnitUIPanel.SetActive(true);
-                panelUIActive = true;
-                unitsOriginalFacing = selectedObject.GetComponent<UnitController>().facing;
-                unitsOriginalPosition =  selectedObject.GetComponent<UnitController>().position;
-                Debug.Log("selected Player Unit");
-                break;
-            case "Enemy Unit":
-                enemyUnitUIPanel.SetActive(true);
-                panelUIActive = true;
-                Debug.Log("selected Enemy Unit");
-                break;
-            default:
-                Debug.Log("Nothing to select");
-                break;
-        } */
     }
 
     
