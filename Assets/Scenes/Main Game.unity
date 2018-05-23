@@ -471,12 +471,16 @@ MonoBehaviour:
     y: 0
     elevation: 0
   currentPath: []
+  pathCounter: 0
   maxMovement: 2
+  maxJump: 2
   spriteOffset: {x: 0, y: 0.4}
   actionSet:
     actions: []
   isBeingPlacing: 0
   inGame: 0
+  spriteMoveSpeed: 1
+  isMoving: 0
 --- !u!331 &21926658
 SpriteMask:
   m_ObjectHideFlags: 0
@@ -1029,12 +1033,16 @@ MonoBehaviour:
     y: 0
     elevation: 0
   currentPath: []
+  pathCounter: 0
   maxMovement: 2
+  maxJump: 2
   spriteOffset: {x: 0, y: 0.4}
   actionSet:
     actions: []
   isBeingPlacing: 0
   inGame: 0
+  spriteMoveSpeed: 1
+  isMoving: 0
 --- !u!331 &35214849
 SpriteMask:
   m_ObjectHideFlags: 0
@@ -2037,6 +2045,7 @@ MonoBehaviour:
   height: 3
   spawnPoints: []
   placingUnits: 0
+  health: 0
 --- !u!212 &65192639
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -9055,6 +9064,7 @@ MonoBehaviour:
     range: 0
     canTargetSelf: 0
     canTargetUnit: 0
+  walkableArea: []
   possibleMoves: []
   possibleTargets: []
   playerUnitsContainer: {fileID: 1992074158}
@@ -26000,12 +26010,16 @@ MonoBehaviour:
     y: 2
     elevation: 0
   currentPath: []
+  pathCounter: 0
   maxMovement: 2
+  maxJump: 2
   spriteOffset: {x: 0, y: 0.4}
   actionSet:
     actions: []
   isBeingPlacing: 0
   inGame: 0
+  spriteMoveSpeed: 1
+  isMoving: 0
 --- !u!331 &771029820
 SpriteMask:
   m_ObjectHideFlags: 0
@@ -37084,12 +37098,16 @@ MonoBehaviour:
     y: 4
     elevation: 0
   currentPath: []
+  pathCounter: 0
   maxMovement: 2
+  maxJump: 2
   spriteOffset: {x: 0, y: 0.4}
   actionSet:
     actions: []
   isBeingPlacing: 0
   inGame: 0
+  spriteMoveSpeed: 1
+  isMoving: 0
 --- !u!331 &1148753679
 SpriteMask:
   m_ObjectHideFlags: 0

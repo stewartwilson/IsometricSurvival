@@ -111,12 +111,16 @@ MonoBehaviour:
     y: 0
     elevation: 0
   currentPath: []
+  pathCounter: 0
   maxMovement: 2
+  maxJump: 2
   spriteOffset: {x: 0, y: 0.4}
   actionSet:
     actions: []
   isBeingPlacing: 0
   inGame: 0
+  spriteMoveSpeed: 8
+  isMoving: 0
   possibleMoves: []
   isActing: 0
   closestTarget: {fileID: 0}

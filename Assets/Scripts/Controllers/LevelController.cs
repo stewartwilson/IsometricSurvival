@@ -13,13 +13,12 @@ public class LevelController : MonoBehaviour {
     // Use this for initialization
     void Awake() {
         walkableArea = new List<WalkableArea>();
-
-        //populateMap();
+        populateWalkableArea();
     }
 
     private void Start()
     {
-        populateWalkableArea();
+        
     }
 
     // Update is called once per frame

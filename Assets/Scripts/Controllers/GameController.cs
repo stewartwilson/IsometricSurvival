@@ -130,6 +130,7 @@ public class GameController : MonoBehaviour
             if (!enemy.isActing)
             {
                 enemy.possiblePaths = getPossibleMovement(enemy.position, enemy.maxMovement, enemy.maxJump);
+                Debug.Log(enemy.possiblePaths.Count);
                 activeUnit.GetComponent<EnemyUnitController>().takeTurn();
             }
 
@@ -137,10 +138,24 @@ public class GameController : MonoBehaviour
         if (selectedObject != null && !displayingActionTargets)
         {
             GridPosition gp = selectedObject.GetComponent<PlayerUnitController>().position;
-            possibleTargets = getPossibleActionTargets(gp, activeAction);
+            if (activeAction is Move)
+            {
+                possibleTargets.Clear();
+                List<List<GridPosition>> possibleMoves = getPossibleMovement(gp, selectedObject.GetComponent<PlayerUnitController>().maxMovement, selectedObject.GetComponent<PlayerUnitController>().maxJump);
+                foreach (List<GridPosition> path in possibleMoves) {
+                    possibleTargets.Add(path[path.Count - 1]);
+                }
+                selectedObject.GetComponent<PlayerUnitController>().possiblePaths = possibleMoves;
+                InstantiateTargetsDisplay(possibleTargets);
+                displayingActionTargets = true;
+            }
+            else
+            {
+                possibleTargets = getPossibleActionTargets(gp, activeAction);
 
-            InstantiateTargetsDisplay(possibleTargets);
-            displayingActionTargets = true;
+                InstantiateTargetsDisplay(possibleTargets);
+                displayingActionTargets = true;
+            }
         }
         else if (selectedObject == null)
         {
@@ -234,8 +249,10 @@ public class GameController : MonoBehaviour
 
         PathingHelper pathingHelper = new PathingHelper();
         pathingHelper.walkableAreas = walkableArea;
-
-        List<List<GridPosition>> paths = pathingHelper.getPossiblePaths(currentPos, maxMovement, maxJump, activeUnit.GetComponent<UnitController>().isPlayerUnit);
+        pathingHelper.enemyUnitPositions = new List<GridPosition>();
+        pathingHelper.playerUnitPositions = new List<GridPosition>();
+        pathingHelper.blockingEffectPositions = new List<GridPosition>();
+        List<List<GridPosition>> paths = pathingHelper.getPossiblePaths2(currentPos, maxMovement, maxJump, activeUnit.GetComponent<UnitController>().isPlayerUnit);
 
         /*
         List<GridPosition> possibleMoves = new List<GridPosition>();

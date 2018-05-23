@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -116,8 +117,10 @@ public class UnitController : MonoBehaviour {
 
     public void moveAlongCurrentPath()
     {
-        transform.position = Vector2.MoveTowards(new Vector2(transform.position.x, transform.position.y), IsometricHelper.gridToGamePostion(currentPath[pathCounter]), spriteMoveSpeed * Time.deltaTime);
-        if(transform.position.Equals(IsometricHelper.gridToGamePostion(currentPath[pathCounter])))
+        Debug.Log(currentPath[pathCounter]);
+        transform.position = Vector2.MoveTowards(new Vector2(transform.position.x, transform.position.y), IsometricHelper.gridToGamePostion(currentPath[pathCounter]) + spriteOffset, spriteMoveSpeed * Time.deltaTime);
+        Vector2 goalPosition = IsometricHelper.gridToGamePostion(currentPath[pathCounter])+ spriteOffset;
+        if (Math.Abs(transform.position.x - goalPosition.x) < .1 && Math.Abs(transform.position.y - goalPosition.y) < .1)
         {
             if (pathCounter < currentPath.Count-1)
             {
@@ -125,7 +128,9 @@ public class UnitController : MonoBehaviour {
             } else
             {
                 isMoving = false;
-                transform.position = IsometricHelper.gridToGamePostion(currentPath[pathCounter]) + spriteOffset;
+                position = currentPath[pathCounter];
+                pathCounter = 0;
+                currentPath = new List<GridPosition>();
             }
         }
     }

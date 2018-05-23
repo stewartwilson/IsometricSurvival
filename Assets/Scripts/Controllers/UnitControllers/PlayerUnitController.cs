@@ -9,9 +9,12 @@ public class PlayerUnitController : UnitController {
         base.doUpdateTasks();
         animator.SetInteger("Facing", (int)facing);
         checkIfDefeated();
-        if (!isBeingPlacing)
+        if (!isBeingPlacing && !isMoving)
         {
             transform.position = IsometricHelper.gridToGamePostion(position) + spriteOffset;
+        } else if(isMoving)
+        {
+            moveAlongCurrentPath();
         }
     }
 }

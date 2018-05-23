@@ -15,6 +15,9 @@ public class EnemyUnitController : UnitController {
         if (!isBeingPlacing && !isMoving)
         {
             transform.position = IsometricHelper.gridToGamePostion(position) + spriteOffset;
+        } else if(isMoving)
+        {
+            moveAlongCurrentPath();
         }
     }
 

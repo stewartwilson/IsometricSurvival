@@ -303,7 +303,15 @@ public class InputController : MonoBehaviour
             if (gameController.activeAction is Move)
             {
                 ((Move)gameController.activeAction).destination = cursor.GetComponent<CursorController>().position;
+                foreach(List<GridPosition> path in selectedObject.GetComponent<PlayerUnitController>().possiblePaths)
+                {
+                    if(cursor.GetComponent<CursorController>().position.Equals(path[path.Count-1]))
+                    {
+                        selectedObject.GetComponent<PlayerUnitController>().currentPath = path;
+                    }
+                }
                 gameController.activeAction.act();
+
                 selectedObject = null;
                 gameController.selectedObject = null;
             }
