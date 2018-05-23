@@ -2,11 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TrapData : MonoBehaviour
+public class TrapData : ActionObject
 {
     public int damage;
-    public GridPosition position;
-    public Vector2 spriteOffset;
 
     void Update()
     {

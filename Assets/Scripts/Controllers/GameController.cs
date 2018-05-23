@@ -37,6 +37,10 @@ public class GameController : MonoBehaviour
     public GameObject enemyUnitsContainer;
     //Holds all unit game objects that are enemies 
     public List<GameObject> enemyUnits;
+    //Parent object for objects created by actions
+    public GameObject actionObjectsContainer;
+    //Holds all unit game objects that are action objects 
+    public List<GameObject> actionObjects;
     //The level controller is in charge of map actions
     public LevelController levelController;
     //this list is generated at the start of each round to store turn order
@@ -173,6 +177,11 @@ public class GameController : MonoBehaviour
         {
             endRound();
         }
+
+        foreach(Transform child in actionObjectsContainer.transform)
+        {
+            actionObjects.Add(child.gameObject);
+        }
     }
 
     public void moveUnit(GridPosition destination)
@@ -249,9 +258,9 @@ public class GameController : MonoBehaviour
 
         PathingHelper pathingHelper = new PathingHelper();
         pathingHelper.walkableAreas = walkableArea;
-        pathingHelper.enemyUnitPositions = new List<GridPosition>();
-        pathingHelper.playerUnitPositions = new List<GridPosition>();
-        pathingHelper.blockingEffectPositions = new List<GridPosition>();
+        pathingHelper.enemyUnitPositions = getEnemyUnitPositions();
+        pathingHelper.playerUnitPositions = getPlayerUnitPositions();
+        pathingHelper.blockingEffectPositions = getActionItemPositions();
         List<List<GridPosition>> paths = pathingHelper.getPossiblePaths2(currentPos, maxMovement, maxJump, activeUnit.GetComponent<UnitController>().isPlayerUnit);
 
         /*
@@ -268,6 +277,36 @@ public class GameController : MonoBehaviour
         */
 
         return paths;
+    }
+
+    public List<GridPosition> getPlayerUnitPositions()
+    {
+        List<GridPosition> positions = new List<GridPosition>();
+        foreach(GameObject unit in playerUnits)
+        {
+            positions.Add(unit.GetComponent<UnitController>().position);
+        }
+        return positions;
+    }
+
+    public List<GridPosition> getEnemyUnitPositions()
+    {
+        List<GridPosition> positions = new List<GridPosition>();
+        foreach (GameObject unit in enemyUnits)
+        {
+            positions.Add(unit.GetComponent<UnitController>().position);
+        }
+        return positions;
+    }
+
+    public List<GridPosition> getActionItemPositions()
+    {
+        List<GridPosition> positions = new List<GridPosition>();
+        foreach (GameObject actionObject in actionObjects)
+        {
+            positions.Add(actionObject.GetComponent<ActionObject>().position);
+        }
+        return positions;
     }
 
     public List<GridPosition> getPossibleActionTargets(GridPosition currentPos, Action action)

@@ -2,12 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WallData : MonoBehaviour
+public class WallData : ActionObject
 {
 
     public int health;
-    public GridPosition position;
-    public Vector2 spriteOffset;
 
     void Update()
     {
