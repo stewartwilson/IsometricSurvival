@@ -18,7 +18,7 @@ public class Move : Action
     public override void act()
     {
         base.act();
-        actor.GetComponent<UnitController>().position = destination;
+        actor.GetComponent<UnitController>().isMoving = true;
     }
 
     public override string ToString()

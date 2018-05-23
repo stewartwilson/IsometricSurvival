@@ -23,6 +23,8 @@ public class GameController : MonoBehaviour
     public bool displayingActionTargets;
     //Action that a unit is currently taking
     public Action activeAction;
+    //Holds all walkable postions from map data
+    public List<GridPosition> walkableArea;
     //Holds the grid positions for a selected units possible moves
     public List<GridPosition> possibleMoves;
     //Holds the grid positions for a selected actions targets
@@ -94,6 +96,10 @@ public class GameController : MonoBehaviour
         initTurnOrder();
         displayingMoves = false;
         activeUnit = turnOrder[0];
+        foreach(WalkableArea wa in levelController.walkableArea)
+        {
+            walkableArea.Add(wa.position);
+        }
         
 
     }
@@ -123,7 +129,7 @@ public class GameController : MonoBehaviour
             EnemyUnitController enemy = activeUnit.GetComponent<EnemyUnitController>();
             if (!enemy.isActing)
             {
-                enemy.possibleMoves = getPossibleMovement(enemy.position, enemy.maxMovement);
+                enemy.possiblePaths = getPossibleMovement(enemy.position, enemy.maxMovement, enemy.maxJump);
                 activeUnit.GetComponent<EnemyUnitController>().takeTurn();
             }
 
@@ -223,8 +229,15 @@ public class GameController : MonoBehaviour
     }
 
 
-    public List<GridPosition> getPossibleMovement(GridPosition currentPos, int maxMovement)
+    public List<List<GridPosition>> getPossibleMovement(GridPosition currentPos, int maxMovement, int maxJump)
     {
+
+        PathingHelper pathingHelper = new PathingHelper();
+        pathingHelper.walkableAreas = walkableArea;
+
+        List<List<GridPosition>> paths = pathingHelper.getPossiblePaths(currentPos, maxMovement, maxJump, activeUnit.GetComponent<UnitController>().isPlayerUnit);
+
+        /*
         List<GridPosition> possibleMoves = new List<GridPosition>();
         foreach (WalkableArea wa in levelController.walkableArea)
         {
@@ -235,8 +248,9 @@ public class GameController : MonoBehaviour
                 possibleMoves.Add(wa.position);
             }
         }
+        */
 
-        return possibleMoves;
+        return paths;
     }
 
     public List<GridPosition> getPossibleActionTargets(GridPosition currentPos, Action action)

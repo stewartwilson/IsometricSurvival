@@ -15,16 +15,22 @@ public class UnitController : MonoBehaviour {
     public bool behindEnvironmentObject;
     protected Animator animator;
     public GridPosition position;
+    public List<List<GridPosition>> possiblePaths;
     public List<GridPosition> currentPath;
+    public int pathCounter;
     public int maxMovement;
+    public int maxJump;
     public Vector2 spriteOffset;
     public ActionSet actionSet;
     public bool isBeingPlacing;
     public bool inGame;
+    public float spriteMoveSpeed;
 
+    public bool isMoving;
     protected bool hasMoved;
     protected bool hasActed;
     protected int turnsTaken;
+
 
     protected void Awake()
     {
@@ -106,6 +112,22 @@ public class UnitController : MonoBehaviour {
     {
         actionSet.actions[3].hasBeenDone = true;
         return actionSet.actions[3].action;
+    }
+
+    public void moveAlongCurrentPath()
+    {
+        transform.position = Vector2.MoveTowards(new Vector2(transform.position.x, transform.position.y), IsometricHelper.gridToGamePostion(currentPath[pathCounter]), spriteMoveSpeed * Time.deltaTime);
+        if(transform.position.Equals(IsometricHelper.gridToGamePostion(currentPath[pathCounter])))
+        {
+            if (pathCounter < currentPath.Count-1)
+            {
+                pathCounter++;
+            } else
+            {
+                isMoving = false;
+                transform.position = IsometricHelper.gridToGamePostion(currentPath[pathCounter]) + spriteOffset;
+            }
+        }
     }
 
 }

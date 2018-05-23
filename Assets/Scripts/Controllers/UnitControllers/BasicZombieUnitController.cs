@@ -26,6 +26,10 @@ public class BasicZombieUnitController : EnemyUnitController
                     move.act();
                     hasMoved = true;
                 }
+                else if(isMoving)
+                {
+                    moveAlongCurrentPath();
+                }
                 else if (!hasActed)
                 {
                     Hit hit = (Hit)doAction1();
@@ -63,7 +67,13 @@ public class BasicZombieUnitController : EnemyUnitController
         closestTarget = getClosestTarget();
         if (closestTarget != null)
         {
-            destination = getMoveTarget();
+            currentPath = getMovePath();
+            pathCounter = 0;
+            if(currentPath.Count >1)
+            {
+                pathCounter = 1;
+            }
+            destination = currentPath[pathCounter];
         }
     }
 
@@ -78,25 +88,25 @@ public class BasicZombieUnitController : EnemyUnitController
         }
     }
 
-    private GridPosition getMoveTarget()
+    private List<GridPosition> getMovePath()
     {
-        GridPosition targetPos = new GridPosition();
+        List<GridPosition> movePath = new List<GridPosition>();
         if (closestTarget != null)
         {
             GridPosition unitPosition = closestTarget.GetComponent<UnitController>().position;
             int closestDistance = 99;
-            foreach (GridPosition pos in possibleMoves)
+            foreach (List<GridPosition> path in possiblePaths)
             {
 
-                int tempDistance = IsometricHelper.distanceBetweenGridPositions(unitPosition, pos);
+                int tempDistance = IsometricHelper.distanceBetweenGridPositions(unitPosition, path[path.Count-1]);
                 if (tempDistance < closestDistance)
                 {
-                    targetPos = pos;
+                    movePath = path;
                     closestDistance = tempDistance;
                 }
             }
         }
-        return targetPos;
+        return movePath;
 
     }
 

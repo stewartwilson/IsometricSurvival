@@ -34,4 +34,14 @@ public struct GridPosition
         GridPosition pos = (GridPosition)obj;
         return pos.x == x && pos.y == y && pos.elevation == elevation;
     }
+
+    public override int GetHashCode()
+    {
+        return base.GetHashCode();
+    }
+
+    public static GridPosition operator +(GridPosition gp1, GridPosition gp2)
+    {
+        return new GridPosition(gp1.x + gp2.x, gp1.y + gp2.y);
+    }
 }
