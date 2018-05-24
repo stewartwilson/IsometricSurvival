@@ -119,7 +119,7 @@ MonoBehaviour:
     actions: []
   isBeingPlacing: 0
   inGame: 0
-  spriteMoveSpeed: 8
+  spriteMoveSpeed: 1
   isMoving: 0
   possibleMoves: []
   isActing: 0

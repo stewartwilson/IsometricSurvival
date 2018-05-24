@@ -157,6 +157,13 @@ public class InputController : MonoBehaviour
         //Ingame movement controls
         else
         {
+            if(gameController.activeUnit.GetComponent<UnitController>().isPlayerUnit)
+            {
+                cursor.GetComponent<SpriteRenderer>().enabled = true;
+            } else
+            {
+                cursor.GetComponent<SpriteRenderer>().enabled = false;
+            }
             if (inspectingUnit)
             {
                 if (back)

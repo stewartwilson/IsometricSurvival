@@ -9071,6 +9071,8 @@ MonoBehaviour:
   playerUnits: []
   enemyUnitsContainer: {fileID: 1050233466}
   enemyUnits: []
+  actionObjectsContainer: {fileID: 1440340446}
+  actionObjects: []
   levelController: {fileID: 0}
   turnOrder: []
   activeUnit: {fileID: 0}
@@ -25996,7 +25998,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a9f6f000d0e0c449bc1e9411ba9e74d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isPlayerUnit: 0
+  isPlayerUnit: 1
   isSelected: 0
   isDefeated: 0
   maxHealth: 10
@@ -37084,7 +37086,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0892990573140342a156814c64608df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isPlayerUnit: 0
+  isPlayerUnit: 1
   isSelected: 0
   isDefeated: 0
   maxHealth: 10
