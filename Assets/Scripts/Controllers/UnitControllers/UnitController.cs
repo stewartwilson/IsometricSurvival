@@ -26,6 +26,8 @@ public class UnitController : MonoBehaviour {
     public bool isBeingPlacing;
     public bool inGame;
     public float spriteMoveSpeed;
+    public GameObject damageNumberPrefab;
+    public GameObject healingNumberPrefab;
 
     public bool isMoving;
     protected bool hasMoved;
@@ -74,6 +76,8 @@ public class UnitController : MonoBehaviour {
     public void takeDamage(int damage)
     {
         health -= damage;
+        damageNumberPrefab.GetComponent<SpriteNumberController>().damage = damage;
+        Instantiate(damageNumberPrefab, transform.position, Quaternion.identity);
     }
 
     public void takeHealing(int healing)

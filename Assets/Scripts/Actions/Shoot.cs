@@ -10,7 +10,7 @@ public class Shoot : Action
     public Shoot()
     {
         range = 3;
-        damage = 1;
+        damage = 2;
         canTargetSelf = false;
         canTargetUnit = true;
         actionName = "Shoot";

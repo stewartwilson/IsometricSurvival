@@ -480,6 +480,9 @@ MonoBehaviour:
   isBeingPlacing: 0
   inGame: 0
   spriteMoveSpeed: 1
+  damageNumberPrefab: {fileID: 1123438522434478, guid: 4e1a7ac7a7fb9654ba2f7ff7b8c06532,
+    type: 2}
+  healingNumberPrefab: {fileID: 0}
   isMoving: 0
 --- !u!331 &21926658
 SpriteMask:
@@ -1042,6 +1045,8 @@ MonoBehaviour:
   isBeingPlacing: 0
   inGame: 0
   spriteMoveSpeed: 1
+  damageNumberPrefab: {fileID: 0}
+  healingNumberPrefab: {fileID: 0}
   isMoving: 0
 --- !u!331 &35214849
 SpriteMask:
@@ -26021,6 +26026,8 @@ MonoBehaviour:
   isBeingPlacing: 0
   inGame: 0
   spriteMoveSpeed: 1
+  damageNumberPrefab: {fileID: 0}
+  healingNumberPrefab: {fileID: 0}
   isMoving: 0
 --- !u!331 &771029820
 SpriteMask:
@@ -37109,6 +37116,8 @@ MonoBehaviour:
   isBeingPlacing: 0
   inGame: 0
   spriteMoveSpeed: 1
+  damageNumberPrefab: {fileID: 0}
+  healingNumberPrefab: {fileID: 0}
   isMoving: 0
 --- !u!331 &1148753679
 SpriteMask:
