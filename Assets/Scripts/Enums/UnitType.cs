@@ -4,9 +4,11 @@ using System.Linq;
 using System.Text;
 
 [System.Serializable]
-public enum UnitClass
+public enum UnitType
 {
-    Soldier,
-    Monk
+    Hunter,
+    Nurse,
+    Contractor,
+    Fisherman,
 };
 

@@ -10,4 +10,6 @@ public class TavernInputController : MonoBehaviour {
             GameObject.Find("Tavern Controller").GetComponent<TavernController>().loadNextScene();
         }
 	}
+
+
 }
