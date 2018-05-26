@@ -3,18 +3,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class TavernController : MonoBehaviour {
 
     public string currentSceneName;
     public LoadGameController gameGontroller;
+    public GameObject powerUpContainer;
     public int numberOfPowerChoices;
     public List<PowerUp> allPowerups;
     public List<PowerUp> currentPowerUps;
     public List<PowerUp> powerUpChoices;
-    public GameObject choice1;
-    public GameObject choice2;
-    public GameObject choice3;
+    public List<GameObject> powerUpUIElements;
     
 
     // Use this for initialization
@@ -54,9 +54,16 @@ public class TavernController : MonoBehaviour {
 
     public void populatePowerUpUIElements()
     {
+        int index = 0;
         foreach(PowerUp powerUp in powerUpChoices)
         {
-            string description = PowerUpHelper.powerUpDescriptionMap[powerUp];
+            PowerUpData pud = powerUpContainer.GetComponent<PowerUpContainer>().getPowerUpDataFromEnum(powerUp);
+            GameObject uiElement = powerUpUIElements[index];
+            Text[] children = uiElement.GetComponentsInChildren<Text>();
+            children[0].text = pud.title;
+            children[1].text = pud.description;
+            children[2].text = pud.unitType.ToString();
+            index++;
         }
     }
 
