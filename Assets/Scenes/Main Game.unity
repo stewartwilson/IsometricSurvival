@@ -9084,9 +9084,14 @@ MonoBehaviour:
   switchTurn: 0
   turnCounter: 0
   currentRound: 0
-  powerUps: []
+  powerUps: 
   isNight: 0
-  enemySet: {fileID: 11400000, guid: 236db5e1214a5aa4a84c3b6f06ff84b3, type: 2}
+  enemySets:
+  - {fileID: 11400000, guid: 236db5e1214a5aa4a84c3b6f06ff84b3, type: 2}
+  - {fileID: 11400000, guid: 59a41ab09f30b7e4e876ee62d1e7c8e8, type: 2}
+  - {fileID: 11400000, guid: 610036faae4f714489ca00f10b08f002, type: 2}
+  - {fileID: 11400000, guid: f6c2d4cf426028846b0b4b9f17fa7af8, type: 2}
+  - {fileID: 11400000, guid: 39ed4443c229a2745b3010ad42356218, type: 2}
   enemyPrefabs: []
   tavern: {fileID: 65192636}
   actionButton1: {fileID: 1117021578}

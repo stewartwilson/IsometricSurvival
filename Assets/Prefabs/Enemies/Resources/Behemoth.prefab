@@ -22,10 +22,9 @@ GameObject:
   - component: {fileID: 212589473674187402}
   - component: {fileID: 95328384359386086}
   - component: {fileID: 61438639883491670}
-  - component: {fileID: 114779177100479184}
   - component: {fileID: 114486700270767414}
   m_Layer: 0
-  m_Name: Behemoth 1
+  m_Name: Behemoth
   m_TagString: Enemy Unit
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -113,9 +112,9 @@ MonoBehaviour:
     elevation: 0
   currentPath: []
   pathCounter: 0
-  maxMovement: 0
-  maxJump: 0
-  spriteOffset: {x: 0, y: 0}
+  maxMovement: 2
+  maxJump: 2
+  spriteOffset: {x: 0.15, y: 1.05}
   actionSet:
     actions: []
   isBeingPlacing: 0
@@ -127,60 +126,12 @@ MonoBehaviour:
   isMoving: 0
   possibleMoves: []
   isActing: 0
-  isPlayerUnit: 0
   closestTarget: {fileID: 0}
   destination:
     x: 0
     y: 0
     elevation: 0
   actionDelay: 0
---- !u!114 &114779177100479184
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1540014045129938}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 460fbd205e6fd764bbf68c32d40d7e39, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isPlayerUnit: 0
-  isSelected: 0
-  isDefeated: 0
-  maxHealth: 10
-  health: 10
-  speed: 0
-  facing: 0
-  canMove: 0
-  behindEnvironmentObject: 0
-  position:
-    x: 0
-    y: 0
-    elevation: 0
-  currentPath: []
-  pathCounter: 0
-  maxMovement: 2
-  maxJump: 2
-  spriteOffset: {x: 0, y: 0.4}
-  actionSet:
-    actions: []
-  isBeingPlacing: 0
-  inGame: 0
-  spriteMoveSpeed: 1
-  damageNumberPrefab: {fileID: 1123438522434478, guid: 4e1a7ac7a7fb9654ba2f7ff7b8c06532,
-    type: 2}
-  healingNumberPrefab: {fileID: 0}
-  isMoving: 0
-  possibleMoves: []
-  isActing: 0
-  isPlayerUnit: 0
-  closestTarget: {fileID: 0}
-  destination:
-    x: 0
-    y: 0
-    elevation: 0
-  actionDelay: 1
 --- !u!212 &212589473674187402
 SpriteRenderer:
   m_ObjectHideFlags: 1
