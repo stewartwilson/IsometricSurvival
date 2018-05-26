@@ -25,7 +25,7 @@ public class UnitController : MonoBehaviour {
     public ActionSet actionSet;
     public bool isBeingPlacing;
     public bool inGame;
-    public float spriteMoveSpeed;
+    public float spriteMoveSpeed = 1;
     public GameObject damageNumberPrefab;
     public GameObject healingNumberPrefab;
 

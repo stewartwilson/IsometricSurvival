@@ -6,6 +6,7 @@ using System.Text;
 [System.Serializable]
 public enum EnemyType
 {
-    Zombie
+    Zombie,
+    Behemoth
 };
 

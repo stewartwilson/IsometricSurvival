@@ -60,7 +60,7 @@ public class GameController : MonoBehaviour
     //object incharge of holding save info
     private GameObject persistence;
     //Enemy spawn info for the current level
-    public EnemySet enemySet;
+    public List<EnemySet> enemySets;
     //Prefabs for all possible enemy types
     public List<GameObject> enemyPrefabs;
     //Hold the tavern object
@@ -348,9 +348,9 @@ public class GameController : MonoBehaviour
         {
             playerUnits.Add(child.gameObject);
         }
-        if (enemySet != null)
+        if (enemySets != null && enemySets[currentRound-1] != null)
         {
-            foreach (EnemyMap enemy in enemySet.enemies)
+            foreach (EnemyMap enemy in enemySets[currentRound-1].enemies)
             {
                 GameObject go = instantiateEnemyType(enemy.enemyType, enemy.position);
                 go.transform.SetParent(enemyUnitsContainer.transform);
@@ -467,6 +467,11 @@ public class GameController : MonoBehaviour
             case EnemyType.Zombie:
 
                 enemy = (GameObject)Instantiate(Resources.Load("Zombie"));
+                enemy.GetComponent<EnemyUnitController>().position = position;
+                break;
+            case EnemyType.Behemoth:
+
+                enemy = (GameObject)Instantiate(Resources.Load("Behemoth"));
                 enemy.GetComponent<EnemyUnitController>().position = position;
                 break;
         }

@@ -34,7 +34,6 @@ public class TavernController : MonoBehaviour {
         for (int i = 0; i < numberOfPowerChoices; i++)
         {
             int index = random.Next(0, possibleChoices.Count);
-            Debug.Log(index);
             powerUpChoices.Add(possibleChoices[index]);
             possibleChoices.RemoveAt(index);
         }
@@ -86,6 +85,7 @@ public class TavernController : MonoBehaviour {
     public void choosePowerUp(int index)
     {
         gameGontroller.saveData.powerUps.Add(powerUpChoices[index]);
+        Debug.Log(powerUpChoices[index].ToString());
         loadNextScene();
     }
 }
