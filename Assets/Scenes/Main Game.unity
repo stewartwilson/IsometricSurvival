@@ -484,6 +484,7 @@ MonoBehaviour:
     type: 2}
   healingNumberPrefab: {fileID: 0}
   isMoving: 0
+  unitType: 0
 --- !u!331 &21926658
 SpriteMask:
   m_ObjectHideFlags: 0
@@ -1048,6 +1049,7 @@ MonoBehaviour:
   damageNumberPrefab: {fileID: 0}
   healingNumberPrefab: {fileID: 0}
   isMoving: 0
+  unitType: 1
 --- !u!331 &35214849
 SpriteMask:
   m_ObjectHideFlags: 0
@@ -26034,6 +26036,7 @@ MonoBehaviour:
   damageNumberPrefab: {fileID: 0}
   healingNumberPrefab: {fileID: 0}
   isMoving: 0
+  unitType: 2
 --- !u!331 &771029820
 SpriteMask:
   m_ObjectHideFlags: 0
@@ -37124,6 +37127,7 @@ MonoBehaviour:
   damageNumberPrefab: {fileID: 0}
   healingNumberPrefab: {fileID: 0}
   isMoving: 0
+  unitType: 3
 --- !u!331 &1148753679
 SpriteMask:
   m_ObjectHideFlags: 0

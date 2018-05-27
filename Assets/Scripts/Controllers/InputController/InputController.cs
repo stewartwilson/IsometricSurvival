@@ -53,7 +53,6 @@ public class InputController : MonoBehaviour
             if (!(Time.time < nextCursorMoveAllowed))
             {
                 GridPosition cursorPosition = cursor.GetComponent<CursorController>().position;
-                GridPosition startPostion = new GridPosition(cursorPosition.x, cursorPosition.y, cursorPosition.elevation);
                 if (vertical > 0)
                 {
                     cursorPosition.x++;
@@ -193,7 +192,6 @@ public class InputController : MonoBehaviour
                     if (!(Time.time < nextCursorMoveAllowed) && !(gameController.activeAction is Wait))
                     {
                         GridPosition cursorPosition = cursor.GetComponent<CursorController>().position;
-                        GridPosition startPostion = new GridPosition(cursorPosition.x, cursorPosition.y, cursorPosition.elevation);
                         if (vertical > 0)
                         {
                             cursorPosition.x++;

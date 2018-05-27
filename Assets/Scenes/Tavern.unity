@@ -286,7 +286,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentSceneName: Tavern
   gameGontroller: {fileID: 0}
-  powerUpContainer: {fileID: 1987126042}
+  powerUpContainer: {fileID: 0}
   numberOfPowerChoices: 3
   allPowerups: 
   currentPowerUps: 
@@ -1291,54 +1291,6 @@ RectTransform:
   m_PrefabParentObject: {fileID: 224812261471500168, guid: ed9695a0cab91474dbdc354973480ff6,
     type: 2}
   m_PrefabInternal: {fileID: 1944028767}
---- !u!1 &1987126042
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 1987126044}
-  - component: {fileID: 1987126043}
-  m_Layer: 0
-  m_Name: Power Up Container
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1987126043
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1987126042}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7291ea3b00b01c44c95e215273cf0e69, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  powerUpData:
-  - {fileID: 11400000, guid: 5d1409cb64a86b84b809f19922072efc, type: 2}
-  - {fileID: 11400000, guid: b4c4952f795580c4dad4453ddb344796, type: 2}
-  - {fileID: 11400000, guid: dbc693ed2660ec64eb14c6bfcd87d2de, type: 2}
-  - {fileID: 11400000, guid: eafc1a26a0731a24587d8fe7e7f374e4, type: 2}
-  - {fileID: 11400000, guid: 69c8e7ddd8b2ba3469c832de0def3151, type: 2}
-  - {fileID: 11400000, guid: a9d9e9d4fa309004b96ae5ae67610635, type: 2}
-  - {fileID: 11400000, guid: 6fd7544c7ec3fdd4ea54f5c2ad477d15, type: 2}
---- !u!4 &1987126044
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1987126042}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -10}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2110820901 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 1858616140435906, guid: ed9695a0cab91474dbdc354973480ff6,

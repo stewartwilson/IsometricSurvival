@@ -5,6 +5,7 @@ using UnityEngine;
 public class EnemyUnitController : UnitController {
 
     public List<GridPosition> possibleMoves;
+    public EnemyType EnemyType;
     public bool isActing;
 
     protected override void doUpdateTasks()

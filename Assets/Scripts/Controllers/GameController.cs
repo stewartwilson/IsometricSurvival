@@ -86,6 +86,7 @@ public class GameController : MonoBehaviour
             && persistence.GetComponent<LoadGameController>().saveData.currentRound != 0)
         {
             loadFromController();
+            
         }
         else
         {
@@ -104,7 +105,28 @@ public class GameController : MonoBehaviour
         {
             walkableArea.Add(wa.position);
         }
-        
+        //Enact all power Ups
+        foreach (PowerUp powerUp in powerUps)
+        {
+            UnitType unitType = persistence.GetComponent<LoadGameController>().getPowerUpDataFromEnum(powerUp).unitType;
+            switch (unitType)
+            {
+                case UnitType.Contractor:
+                    PowerUpHelper.activatePowerUp(powerUp, playerUnits.Find(unit => UnitType.Contractor.Equals(unit.GetComponent<PlayerUnitController>().unitType)).GetComponent<UnitController>());
+                    break;
+                case UnitType.Fisherman:
+                    PowerUpHelper.activatePowerUp(powerUp, playerUnits.Find(unit => UnitType.Fisherman.Equals(unit.GetComponent<PlayerUnitController>().unitType)).GetComponent<UnitController>());
+                    break;
+                case UnitType.Hunter:
+                    PowerUpHelper.activatePowerUp(powerUp, playerUnits.Find(unit => UnitType.Hunter.Equals(unit.GetComponent<PlayerUnitController>().unitType)).GetComponent<UnitController>());
+                    break;
+                case UnitType.Nurse:
+                    PowerUpHelper.activatePowerUp(powerUp, playerUnits.Find(unit => UnitType.Nurse.Equals(unit.GetComponent<PlayerUnitController>().unitType)).GetComponent<UnitController>());
+                    break;
+                default:
+                    break;
+            }
+        }
 
     }
 

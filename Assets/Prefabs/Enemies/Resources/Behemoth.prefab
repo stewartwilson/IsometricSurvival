@@ -125,6 +125,7 @@ MonoBehaviour:
   healingNumberPrefab: {fileID: 0}
   isMoving: 0
   possibleMoves: []
+  EnemyType: 1
   isActing: 0
   closestTarget: {fileID: 0}
   destination:

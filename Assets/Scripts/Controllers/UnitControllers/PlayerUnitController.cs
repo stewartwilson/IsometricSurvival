@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerUnitController : UnitController {
-
+    public UnitType unitType;
     protected override void doUpdateTasks()
     {
         base.doUpdateTasks();

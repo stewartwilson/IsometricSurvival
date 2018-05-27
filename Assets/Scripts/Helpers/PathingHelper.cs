@@ -14,7 +14,6 @@ public class PathingHelper
     public List<GridPosition> getBestPath(GridPosition start, GridPosition goal, int maxMovement, int maxJump)
     {
         List<GridPosition> path = new List<GridPosition>();
-        GridPosition currentNode = start;
         int closestDistace = 999;
         for (int i = 0; i < maxMovement; i++)
         {
@@ -59,9 +58,6 @@ public class PathingHelper
                     path[i] = down;
                 }
             }
-
-            
-
         }
 
         return path;
@@ -179,7 +175,6 @@ public class PathingHelper
     public List<List<GridPosition>> getPossiblePaths2(GridPosition start, int maxMovement, int maxJump, bool isPlayer)
     {
         List<List<GridPosition>> paths = new List<List<GridPosition>>();
-        List<List<GridPosition>> tempPaths = new List<List<GridPosition>>();
         List<GridPosition> starting = new List<GridPosition>();
         starting.Add(start);
         paths.Add(starting);

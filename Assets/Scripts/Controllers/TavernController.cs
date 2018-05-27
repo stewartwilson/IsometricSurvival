@@ -21,6 +21,7 @@ public class TavernController : MonoBehaviour {
     void Start () {
         if (GameObject.Find("Load Game Controller") != null) {
             gameGontroller = GameObject.Find("Load Game Controller").GetComponent<LoadGameController>();
+            powerUpContainer = GameObject.Find("Power Up Container");
             currentPowerUps = gameGontroller.saveData.powerUps;
         }
         foreach (PowerUp power in Enum.GetValues(typeof(PowerUp)))

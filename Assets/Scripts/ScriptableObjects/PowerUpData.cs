@@ -11,5 +11,6 @@ public class PowerUpData : ScriptableObject
     [SerializeField]
     public string description;
     [SerializeField]
-    public UnitType unitType; 
+    public UnitType unitType;
+
 }
