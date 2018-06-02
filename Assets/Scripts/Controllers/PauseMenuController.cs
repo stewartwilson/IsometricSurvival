@@ -15,7 +15,6 @@ public class PauseMenuController : MonoBehaviour {
     {
         if (Input.GetButtonDown("Pause"))
         {
-            Debug.Log("Pause");
             if (gameIsPaused)
             {
                 Resume();

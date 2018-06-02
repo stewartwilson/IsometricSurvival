@@ -316,7 +316,7 @@ public class InputController : MonoBehaviour
                     }
                 }
                 gameController.activeAction.act();
-
+                disableMoveButton();
                 selectedObject = null;
                 gameController.selectedObject = null;
             }
@@ -329,12 +329,14 @@ public class InputController : MonoBehaviour
                     gameController.activeAction.act();
                     selectedObject = null;
                     gameController.selectedObject = null;
+                    disableActionButtons();
                 }
             }
             if (gameController.activeAction is Trap)
             {
                 ((Trap)gameController.activeAction).destination = cursor.GetComponent<CursorController>().position;
                 gameController.activeAction.act();
+                disableActionButtons();
                 selectedObject = null;
                 gameController.selectedObject = null;
             }
@@ -342,6 +344,7 @@ public class InputController : MonoBehaviour
             {
                 ((Build)gameController.activeAction).destination = cursor.GetComponent<CursorController>().position;
                 gameController.activeAction.act();
+                disableActionButtons();
                 selectedObject = null;
                 gameController.selectedObject = null;
             }
@@ -352,6 +355,7 @@ public class InputController : MonoBehaviour
                 {
                     ((Hook)gameController.activeAction).target = unit;
                     gameController.activeAction.act();
+                    disableActionButtons();
                     selectedObject = null;
                     gameController.selectedObject = null;
                 }
@@ -374,6 +378,7 @@ public class InputController : MonoBehaviour
                 {
                     ((Heal)gameController.activeAction).target = unit;
                     gameController.activeAction.act();
+                    disableActionButtons();
                     selectedObject = null;
                     gameController.selectedObject = null;
                 }
@@ -382,6 +387,7 @@ public class InputController : MonoBehaviour
             {
                 ((Wait)gameController.activeAction).facing = selectedObject.GetComponent<UnitController>().facing;
                 gameController.activeAction.act();
+                enableAllButton();
                 selectedObject = null;
                 gameController.selectedObject = null;
                 gameController.endCurrentTurn();
@@ -389,6 +395,48 @@ public class InputController : MonoBehaviour
 
 
             //TODO add in the other Action Types
+        }
+    }
+
+    /**
+     * 
+     */
+    public void disableActionButtons()
+    {
+        Button[] buttons = playerUnitUIPanel.GetComponentsInChildren<Button>();
+        foreach (Button b in buttons)
+        {
+            if (b.name.Equals("Action 1") || b.name.Equals("Action 2"))
+            {
+                b.interactable = false;
+            }
+        }
+    }
+
+    /**
+     * 
+     */
+    public void disableMoveButton()
+    {
+        Button[] buttons = playerUnitUIPanel.GetComponentsInChildren<Button>();
+        foreach (Button b in buttons)
+        {
+            if (b.name.Equals("Move Button"))
+            {
+                b.interactable = false;
+            }
+        }
+    }
+
+    /**
+     * 
+     */
+    public void enableAllButton()
+    {
+        Button[] buttons = playerUnitUIPanel.GetComponentsInChildren<Button>();
+        foreach (Button b in buttons)
+        {
+            b.interactable = true;
         }
     }
 
