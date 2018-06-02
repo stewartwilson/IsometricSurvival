@@ -465,6 +465,7 @@ MonoBehaviour:
   speed: 10
   facing: 0
   canMove: 0
+  canAct: 0
   behindEnvironmentObject: 0
   position:
     x: 0
@@ -1031,6 +1032,7 @@ MonoBehaviour:
   speed: 0
   facing: 0
   canMove: 0
+  canAct: 0
   behindEnvironmentObject: 0
   position:
     x: 0
@@ -1046,7 +1048,8 @@ MonoBehaviour:
   isBeingPlacing: 0
   inGame: 0
   spriteMoveSpeed: 1
-  damageNumberPrefab: {fileID: 0}
+  damageNumberPrefab: {fileID: 1123438522434478, guid: 4e1a7ac7a7fb9654ba2f7ff7b8c06532,
+    type: 2}
   healingNumberPrefab: {fileID: 0}
   isMoving: 0
   unitType: 1
@@ -26435,6 +26438,7 @@ MonoBehaviour:
   speed: 5
   facing: 0
   canMove: 0
+  canAct: 0
   behindEnvironmentObject: 0
   position:
     x: 0
@@ -26450,7 +26454,8 @@ MonoBehaviour:
   isBeingPlacing: 0
   inGame: 0
   spriteMoveSpeed: 1
-  damageNumberPrefab: {fileID: 0}
+  damageNumberPrefab: {fileID: 1123438522434478, guid: 4e1a7ac7a7fb9654ba2f7ff7b8c06532,
+    type: 2}
   healingNumberPrefab: {fileID: 0}
   isMoving: 0
   unitType: 2
@@ -37600,6 +37605,7 @@ MonoBehaviour:
   speed: 8
   facing: 0
   canMove: 0
+  canAct: 0
   behindEnvironmentObject: 0
   position:
     x: 0
@@ -37615,7 +37621,8 @@ MonoBehaviour:
   isBeingPlacing: 0
   inGame: 0
   spriteMoveSpeed: 1
-  damageNumberPrefab: {fileID: 0}
+  damageNumberPrefab: {fileID: 1123438522434478, guid: 4e1a7ac7a7fb9654ba2f7ff7b8c06532,
+    type: 2}
   healingNumberPrefab: {fileID: 0}
   isMoving: 0
   unitType: 3

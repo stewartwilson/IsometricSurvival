@@ -13,6 +13,7 @@ public class UnitController : MonoBehaviour {
     public int speed;
     public Facing facing;
     public bool canMove;
+    public bool canAct;
     public bool behindEnvironmentObject;
     protected Animator animator;
     public GridPosition position;
@@ -48,6 +49,8 @@ public class UnitController : MonoBehaviour {
         health = maxHealth;
         hasMoved = false;
         hasActed = false;
+        canMove = true;
+        canAct = true;
         turnsTaken = 0;
     }
 
@@ -135,8 +138,46 @@ public class UnitController : MonoBehaviour {
                 position = currentPath[pathCounter];
                 pathCounter = 0;
                 currentPath = new List<GridPosition>();
+
             }
         }
+        if(checkForTrap(currentPath[pathCounter]))
+        {
+            isMoving = false;
+            position = currentPath[pathCounter];
+            pathCounter = 0;
+            currentPath = new List<GridPosition>();
+        }
+    }
+
+    public bool checkForTrap(GridPosition checkPosition)
+    {
+        bool tripped = false;
+        Debug.Log("Check for Trap");
+        List<GameObject> actionObjects = GameObject.Find("Game Controller").GetComponent<GameController>().actionObjects;
+        GameObject trippedTrap = null;
+        foreach (GameObject actionObject in actionObjects)
+        {
+            if (actionObject.GetComponent<ActionObject>() is TrapData)
+            {
+                TrapData trap = actionObject.GetComponent<TrapData>();
+                if (trap.position.Equals(checkPosition))
+                {
+                    trippedTrap = actionObject;
+                    Debug.Log("Trap Tripped");
+                }
+            }
+
+        }
+        if (trippedTrap != null)
+        {
+            canMove = false;
+            takeDamage(trippedTrap.GetComponent<TrapData>().damage);
+            actionObjects.Remove(trippedTrap);
+            Destroy(trippedTrap);
+            tripped = true;
+        }
+        return tripped;
     }
 
 }

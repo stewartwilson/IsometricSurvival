@@ -156,7 +156,6 @@ public class GameController : MonoBehaviour
             if (!enemy.isActing)
             {
                 enemy.possiblePaths = getPossibleMovement(enemy.position, enemy.maxMovement, enemy.maxJump);
-                Debug.Log(enemy.possiblePaths.Count);
                 activeUnit.GetComponent<EnemyUnitController>().takeTurn();
             }
 
@@ -199,8 +198,8 @@ public class GameController : MonoBehaviour
         {
             endRound();
         }
-
-        foreach(Transform child in actionObjectsContainer.transform)
+        actionObjects.Clear();
+        foreach (Transform child in actionObjectsContainer.transform)
         {
             actionObjects.Add(child.gameObject);
         }
@@ -326,7 +325,10 @@ public class GameController : MonoBehaviour
         List<GridPosition> positions = new List<GridPosition>();
         foreach (GameObject actionObject in actionObjects)
         {
-            positions.Add(actionObject.GetComponent<ActionObject>().position);
+            if (actionObject.GetComponent<ActionObject>() is WallData)
+            {
+                positions.Add(actionObject.GetComponent<ActionObject>().position);
+            }
         }
         return positions;
     }

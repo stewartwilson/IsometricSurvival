@@ -20,19 +20,24 @@ public class BasicZombieUnitController : EnemyUnitController
             {
 
                 if (!hasMoved)
-                {
-                    Move move = (Move)doMoveAction();
-                    move.destination = currentPath[currentPath.Count-1];
-                    move.act();
+                {   if (canMove)
+                    {
+                        Move move = (Move)doMoveAction();
+                        move.destination = currentPath[currentPath.Count - 1];
+                        move.act();
+                    }
                     hasMoved = true;
                 }
                 else if (!hasActed)
                 {
-                    Hit hit = (Hit)doAction1();
-                    hit.target = getActionTarget(hit);
-                    if (hit.target != null)
+                    if (canAct)
                     {
-                        hit.act();
+                        Hit hit = (Hit)doAction1();
+                        hit.target = getActionTarget(hit);
+                        if (hit.target != null)
+                        {
+                            hit.act();
+                        }
                     }
                     hasActed = true;
                 }

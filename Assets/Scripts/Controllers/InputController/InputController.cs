@@ -159,6 +159,14 @@ public class InputController : MonoBehaviour
             if(gameController.activeUnit.GetComponent<UnitController>().isPlayerUnit)
             {
                 cursor.GetComponent<SpriteRenderer>().enabled = true;
+                if(!gameController.activeUnit.GetComponent<UnitController>().canAct)
+                {
+                    disableActionButtons();
+                }
+                if (!gameController.activeUnit.GetComponent<UnitController>().canMove)
+                {
+                    disableMoveButton();
+                }
             } else
             {
                 cursor.GetComponent<SpriteRenderer>().enabled = false;
